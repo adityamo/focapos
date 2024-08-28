@@ -5,7 +5,7 @@ const ServicesLanding = () => {
   return (
     <section className="bg-white">
       <Container className="py-10">
-        <div className="flex flex-col lg:flex-row lg:space-x-28">
+        <div className="flex flex-col lg:flex-row lg:space-x-28 lg:items-center">
           <div className="lg:w-1/2">
             <div className="space-y-1 lg:space-y-4 text-center lg:text-start lg:ms-10 pb-5 lg:pb-0">
               <h2 className="font-semibold text-lg lg:text-3xl text-slate-700">
@@ -35,6 +35,60 @@ const ServicesLanding = () => {
                     </h5>
                     <p className="text-gray-500 text-xs">
                       Kami berikan kemudahan untuk mengakses berbagai fitur
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-row lg:flex-col items-center text-start lg:text-center p-2 space-y-2">
+                  <div className="bg-indigo-100 flex h-[50px] w-full max-w-[50px] items-center justify-center rounded-full bg-primary text-white sm:mr-6 sm:h-[60px] sm:max-w-[60px] md:mr-4 md:h-[50px] md:max-w-[50px] xl:mr-6 xl:h-[60px] xl:max-w-[60px]">
+                    <img
+                      src="/assets/icon/hero/icon-2.svg"
+                      alt=""
+                      className="h-30 w-30 lg:h-[550px] lg:w-[550px]"
+                    />
+                  </div>
+                  <div className="flex flex-col lg:flex-col ms-5 lg:ms-0">
+                    <h5 className="font-semibold text-sm lg:text-lg text-slate-700">
+                      Laporan
+                    </h5>
+                    <p className="text-gray-500 text-xs">
+                      Berbagai jenis laporan yang anda butuhkan akan kami
+                      sajikan
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-row lg:flex-col items-center text-start lg:text-center  lg:border-r p-2 space-y-2">
+                  <div className="bg-indigo-100 flex h-[50px] w-full max-w-[50px] items-center justify-center rounded-full bg-primary text-white sm:mr-6 sm:h-[60px] sm:max-w-[60px] md:mr-4 md:h-[50px] md:max-w-[50px] xl:mr-6 xl:h-[60px] xl:max-w-[60px]">
+                    <img
+                      src="/assets/icon/hero/icon-3.svg"
+                      alt=""
+                      className="h-30 w-30 lg:h-[550px] lg:w-[550px]"
+                    />
+                  </div>
+                  <div className="flex flex-col lg:flex-col ms-5 lg:ms-0">
+                    <h5 className="font-semibold text-sm lg:text-lg text-slate-700">
+                      Integrasi
+                    </h5>
+                    <p className="text-gray-500 text-xs">
+                      Menghubungkan dengan BANK, POS, E-commerce dan pajak untuk
+                      akurasi data
+                    </p>
+                  </div>
+                </div>
+                <div className="flex flex-row lg:flex-col items-center text-start lg:text-center p-2 space-y-2">
+                  <div className="bg-indigo-100 flex h-[50px] w-full max-w-[50px] items-center justify-center rounded-full bg-primary text-white sm:mr-6 sm:h-[60px] sm:max-w-[60px] md:mr-4 md:h-[50px] md:max-w-[50px] xl:mr-6 xl:h-[60px] xl:max-w-[60px]">
+                    <img
+                      src="/assets/icon/hero/icon-4.svg"
+                      alt=""
+                      className="h-30 w-30 lg:h-[550px] lg:w-[550px]"
+                    />
+                  </div>
+                  <div className="flex flex-col lg:flex-col ms-5 lg:ms-0">
+                    <h5 className="font-semibold text-sm lg:text-lg text-slate-700">
+                      Analisa
+                    </h5>
+                    <p className="text-gray-500 text-xs">
+                      Analisa tentang bisnis anda untuk memudahkan pengambilan
+                      keputusan
                     </p>
                   </div>
                 </div>

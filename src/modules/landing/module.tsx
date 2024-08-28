@@ -4,6 +4,7 @@ import OurFeature from "./ourfeature";
 import PaymentMethod from "./paymentmethod";
 import BannerExample from "./bannerexample";
 import ServicesLanding from "./services";
+import Solution from "./solution";
 
 export default async function LandingModule() {
   return (
@@ -13,6 +14,7 @@ export default async function LandingModule() {
       <PaymentMethod />
       <BannerExample />
       <ServicesLanding />
+      <Solution />
     </>
   );
 }

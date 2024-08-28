@@ -4,7 +4,7 @@ import React from "react";
 const BannerExample = () => {
   return (
     <section className="bg-white py-5 lg:py-2 pb-2 lg:pb-8">
-      <Container className="max-w-sm lg:max-w-[980px] bg-gradient-to-b from-[#4136C5] to-[#221D68] lg:rounded-xl">
+      <Container className="max-w-sm lg:max-w-[950px] bg-gradient-to-b from-[#4136C5] to-[#221D68] lg:rounded-xl">
         <div className="px-10 py-5 lg:py-20">
           <div className="flex flex-col">
             <div className="space-y-5">
