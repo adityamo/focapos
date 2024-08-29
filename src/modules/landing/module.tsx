@@ -5,6 +5,7 @@ import PaymentMethod from "./paymentmethod";
 import BannerExample from "./bannerexample";
 import ServicesLanding from "./services";
 import Solution from "./solution";
+import Subscribe from "./subscribe";
 
 export default async function LandingModule() {
   return (
@@ -15,6 +16,7 @@ export default async function LandingModule() {
       <BannerExample />
       <ServicesLanding />
       <Solution />
+      <Subscribe />
     </>
   );
 }

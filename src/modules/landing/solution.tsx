@@ -20,17 +20,17 @@ const solution = () => {
       <Container className="bg-indigo-50 rounded-lg">
         <div className="flex flex-col p-6">
           <div className="">
-            <h5 className="text-indigo-700 text-md font-normal pb-3">
+            <h5 className="text-indigo-700 text-xs lg:text-md font-normal pb-3">
               Solusi berbagai jenis bisnis
             </h5>
             <h3 className="text-xl lg:text-3xl text-slate-700 font-semibold pb-2">
               Gunakan di Berbagai Jenis Bisnis
             </h3>
-            <small className="text-sm text-gray-400 pt-2">
+            <small className="text-xs lg:text-sm text-gray-400 pt-2">
               Kami akan membantu anda di berbagai jenis bisnis yang anda miliki
             </small>
           </div>
-          <div className="flex flex-row pt-6 gap-10">
+          <div className="flex flex-col lg:flex-row pt-6 gap-10">
             <div className="w-full lg:w-1/2">
               <img
                 src="/assets/images/hero/casher.jpg"
@@ -39,7 +39,7 @@ const solution = () => {
               />
             </div>
             <div className="w-full lg:w-1/2">
-              <ul className="flex flex-wrap text-md font-medium text-center text-gray-500 dark:text-gray-400">
+              <ul className="flex flex-wrap text-xs lg:text-md font-medium text-center text-gray-500 dark:text-gray-400">
                 {tabs.map((item: any, key: React.Key) => {
                   return (
                     <li className="me-4" key={key}>
