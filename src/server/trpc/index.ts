@@ -1,6 +1,8 @@
-import { router } from "@/libs/trpc/init";
-import * as routes from "./router";
+import { createTRPCRouter } from "@/libs/trpc/init";
+import { authRouter } from "./routers";
 
-export const appRouter = router(routes);
+export const appRouter = createTRPCRouter({
+  auth: authRouter,
+});
 
 export type AppRouter = typeof appRouter;

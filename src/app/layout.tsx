@@ -4,6 +4,7 @@ import { siteConfig } from "@/config/site";
 import type { Metadata } from "next";
 import { ReactNode } from "react";
 import NextTopLoader from "nextjs-toploader";
+import { Providers } from "@/providers";
 
 export const metadata: Metadata = {
   title: siteConfig.name,
@@ -27,7 +28,6 @@ export const metadata: Metadata = {
 
 type Props = {
   children: ReactNode;
-  // params: { locale: string; session: any };
 };
 
 export default async function RootLayout({ children }: Props) {
@@ -48,7 +48,7 @@ export default async function RootLayout({ children }: Props) {
           speed={200}
           shadow="0 0 10px #2299DD,0 0 5px #2299DD"
         />
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

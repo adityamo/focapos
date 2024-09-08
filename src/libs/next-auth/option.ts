@@ -1,7 +1,8 @@
-import { NextAuthOptions, AuthOptions } from "next-auth";
+import { NextAuthOptions, AuthOptions, getServerSession } from "next-auth";
 import { credentialProvider } from "./credential";
 import { refreshToken } from "./api";
 import { signOut } from "next-auth/react";
+import { GetServerSidePropsContext } from "next";
 
 async function refreshAccessToken(token: any) {
   // console.log("Now refreshing the expired token...");
@@ -76,22 +77,6 @@ export const authOptions: AuthOptions = {
       if (token) {
         session.accessToken = token.accessToken;
         session.error = token.error;
-        // const res = await getUserInfo(token.accessToken);
-        // const user = await res.json();
-        // session.accessToken = token.accessToken;
-        // session.refreshToken = token.refreshToken;
-        // session.division = user.result.division;
-        // session.department = user.result.department;
-        // session.section = user.result.section;
-        // session.unit = user.result.unit;
-        // session.position = user.result.position;
-        // session.area = user.result.area;
-        // session.email = user.result.email;
-        // session.name = user.result.name;
-        // session.company = user.result.company;
-        // session.phone = user.result.phone;
-        // session.member = user.result.member;
-        // session.url = user.result.url;
       }
 
       if (token.error === "RefreshAccessTokenError") {
@@ -103,3 +88,10 @@ export const authOptions: AuthOptions = {
   },
   debug: process.env.NODE_ENV === "development",
 } satisfies NextAuthOptions;
+
+export const getServerAuthSession = (ctx: {
+  req: GetServerSidePropsContext["req"];
+  res: GetServerSidePropsContext["res"];
+}) => {
+  return getServerSession(ctx.req, ctx.res, authOptions);
+};

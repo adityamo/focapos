@@ -1,23 +1,16 @@
-"use client";
+import { getServerSession } from "next-auth";
+import RegisterPage from "./register";
+import { authOptions } from "@/libs/next-auth";
+import { createTRPCCaller } from "@/utils/api-rsc";
 
-import { UserValues } from "@/interface/user";
-import RegisterModule, {
-  RegisterFormRefType,
-} from "@/modules/auth/register/module";
-import React, { useRef, useState } from "react";
-import { SubmitHandler } from "react-hook-form";
+export default async function page() {
+  const session = await getServerSession(authOptions);
+  const caller = await createTRPCCaller(session);
+  const hello = await caller.auth.hello();
 
-const RegisterPage = () => {
-  const ref = useRef<RegisterFormRefType>(null);
-  const [errMsg, setErrMsg] = useState("");
+  const secretMessage = caller.auth.getSecretMessage();
+  console.log(hello);
+  console.log(secretMessage);
 
-  const handleRegister: SubmitHandler<UserValues> = async (values) => {
-    console.log(values);
-    setErrMsg("");
-  };
-  return (
-    <RegisterModule ref={ref} onSubmit={handleRegister} errorMsg={errMsg} />
-  );
-};
-
-export default RegisterPage;
+  return <RegisterPage />;
+}

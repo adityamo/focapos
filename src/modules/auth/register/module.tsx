@@ -10,6 +10,7 @@ import { UserValues } from "@/interface/user";
 interface Props {
   onSubmit: SubmitHandler<UserValues>;
   errorMsg: string;
+  onLoading: boolean;
 }
 
 export type RegisterFormRefType = {
@@ -29,12 +30,9 @@ const schema = Yup.object().shape({
 const RegisterModule: ForwardRefRenderFunction<RegisterFormRefType, Props> = ({
   onSubmit,
   errorMsg,
+  onLoading,
 }: Props) => {
-  const {
-    handleSubmit,
-    control,
-    formState: { isSubmitting },
-  } = useForm({
+  const { handleSubmit, control } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       name: "",
@@ -113,9 +111,9 @@ const RegisterModule: ForwardRefRenderFunction<RegisterFormRefType, Props> = ({
             <button
               type="submit"
               className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-indigo-700 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
-              disabled={isSubmitting}
+              disabled={onLoading}
             >
-              {isSubmitting ? (
+              {onLoading ? (
                 <>
                   <svg
                     aria-hidden="true"
