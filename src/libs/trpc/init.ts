@@ -2,8 +2,10 @@ import { initTRPC, TRPCError } from "@trpc/server";
 import { type CreateNextContextOptions } from "@trpc/server/adapters/next";
 import { type Session } from "next-auth";
 import superjson from "superjson";
-import { db } from "./db";
+import { prisma } from "./db";
 import { getSession } from "next-auth/react";
+import { ZodError } from "zod";
+// import { ZodError } from "zod";
 
 /**
  * 1. CONTEXT
@@ -31,7 +33,7 @@ type CreateContextOptions = {
 export const createInnerTRPCContext = (opts: CreateContextOptions) => {
   return {
     session: opts.session,
-    db,
+    prisma,
   };
 };
 
@@ -61,9 +63,32 @@ export const createTRPCContext = async (opts: CreateNextContextOptions) => {
 
 const t = initTRPC.context<typeof createTRPCContext>().create({
   transformer: superjson,
+  errorFormatter({ shape, error }) {
+    return {
+      ...shape,
+      data: {
+        ...shape.data,
+        zodError:
+          error.cause instanceof ZodError ? error.cause.flatten() : null,
+      },
+    };
+  },
 });
 
 /** Reusable middleware that enforces users are logged in before running the procedure. */
+
+export const createTRPCRouter = t.router;
+export const publicProcedure = t.procedure;
+/**
+ * Protected (authenticated) procedure
+ *
+ * If you want a query or mutation to ONLY be accessible to logged in users, use this. It verifies
+ * the session is valid and guarantees `ctx.session.user` is not null.
+ *
+ * @see https://trpc.io/docs/procedures
+ *
+ */
+
 const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   if (!ctx.session || !ctx.session.user) {
     throw new TRPCError({ code: "UNAUTHORIZED" });
@@ -76,14 +101,6 @@ const enforceUserIsAuthed = t.middleware(({ ctx, next }) => {
   });
 });
 
-/**
- * Protected (authenticated) procedure
- *
- * If you want a query or mutation to ONLY be accessible to logged in users, use this. It verifies
- * the session is valid and guarantees `ctx.session.user` is not null.
- *
- * @see https://trpc.io/docs/procedures
- */
 export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
 
 /**
@@ -98,6 +115,3 @@ export const protectedProcedure = t.procedure.use(enforceUserIsAuthed);
  *
  * @see https://trpc.io/docs/router
  */
-
-export const createTRPCRouter = t.router;
-export const publicProcedure = t.procedure;

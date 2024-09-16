@@ -17,7 +17,7 @@ const getBaseUrl = () => {
   if (typeof window !== "undefined") return ""; // browser should use relative url
   if (process.env.NEXT_PUBLIC_API_URL)
     return `https://${process.env.NEXT_PUBLIC_API_URL}`; // SSR should use vercel url
-  return `http://localhost:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
+  return `http://127.0.0.1:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
 };
 
 export const api = createTRPCReact<AppRouter>();

@@ -1,9 +1,18 @@
-import React, { forwardRef, ForwardRefRenderFunction } from "react";
+import React, {
+  forwardRef,
+  ForwardRefRenderFunction,
+  useImperativeHandle,
+} from "react";
 import AuthDefault from "@/components/authlayout/AuthDefault";
 import InputText from "@/components/inputs/InputText";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { SubmitHandler, useForm, UseFormSetError } from "react-hook-form";
+import {
+  SubmitHandler,
+  useForm,
+  UseFormSetError,
+  UseFormSetValue,
+} from "react-hook-form";
 import InputPassword from "@/components/inputs/InputPassword";
 import { UserValues } from "@/interface/user";
 
@@ -15,6 +24,7 @@ interface Props {
 
 export type RegisterFormRefType = {
   setError: UseFormSetError<UserValues>;
+  setValue: UseFormSetValue<UserValues>;
 };
 
 const schema = Yup.object().shape({
@@ -27,12 +37,11 @@ const schema = Yup.object().shape({
     .required("Password cannot empty"),
 });
 
-const RegisterModule: ForwardRefRenderFunction<RegisterFormRefType, Props> = ({
-  onSubmit,
-  errorMsg,
-  onLoading,
-}: Props) => {
-  const { handleSubmit, control } = useForm({
+const RegisterModule: ForwardRefRenderFunction<RegisterFormRefType, Props> = (
+  { onSubmit, errorMsg, onLoading },
+  ref
+) => {
+  const { handleSubmit, control, setError, setValue } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
       name: "",
@@ -40,6 +49,11 @@ const RegisterModule: ForwardRefRenderFunction<RegisterFormRefType, Props> = ({
       email: "",
     },
   });
+
+  useImperativeHandle(ref, () => ({
+    setError,
+    setValue,
+  }));
 
   return (
     <AuthDefault>
