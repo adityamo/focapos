@@ -2,10 +2,11 @@ import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
-} from "@/libs/trpc";
+} from "@/server/api/trpc";
+
 import { RegisterSchema } from "@/entities";
 import * as bs from "bcryptjs";
-import { prisma } from "@/libs/trpc/db";
+import { prisma } from "@/server/db";
 
 export const authRouter = createTRPCRouter({
   hello: publicProcedure.query(() => {
@@ -16,7 +17,7 @@ export const authRouter = createTRPCRouter({
   }),
   registerUser: publicProcedure
     .input(RegisterSchema)
-    .mutation(async ({ input }) => {
+    .mutation(async ({ input }: any) => {
       const { name, email, password } = input;
       const passwordEncrypt = await bs.hash(password, await bs.genSalt(12));
 

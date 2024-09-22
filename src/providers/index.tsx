@@ -1,7 +1,7 @@
-"use client";
-
-import { AuthProvider } from "@/libs/next-auth";
-import { QueryProvider } from "@/utils/api";
+import { cookies } from "next/headers";
+import { AuthProvider } from "@/server/AuthProvider";
+import { TRPCReactProvider } from "@/utils/api";
+// import { QueryProvider } from "@/utils/api";
 
 interface Props {
   children: React.ReactNode;
@@ -10,7 +10,9 @@ interface Props {
 export const Providers = ({ children }: Props) => {
   return (
     <AuthProvider>
-      <QueryProvider>{children}</QueryProvider>
+      <TRPCReactProvider cookies={cookies().toString()}>
+        {children}
+      </TRPCReactProvider>
     </AuthProvider>
   );
 };

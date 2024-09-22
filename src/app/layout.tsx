@@ -5,6 +5,8 @@ import type { Metadata } from "next";
 import { ReactNode } from "react";
 import NextTopLoader from "nextjs-toploader";
 import { Providers } from "@/providers";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/ReactToastify.css";
 
 export const metadata: Metadata = {
   title: siteConfig.name,
@@ -47,6 +49,16 @@ export default async function RootLayout({ children }: Props) {
           easing="ease"
           speed={200}
           shadow="0 0 10px #2299DD,0 0 5px #2299DD"
+        />
+        <ToastContainer
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
         />
         <Providers>{children}</Providers>
       </body>

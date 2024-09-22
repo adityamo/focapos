@@ -1,51 +1,49 @@
 "use client";
-/**
- * This is the client-side entrypoint for your tRPC API. It is used to create the `api` object which
- * contains the Next.js App-wrapper, as well as your type-safe React Query hooks.
- *
- * We also create a few inference helpers for input and output types.
- */
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { httpBatchLink, loggerLink } from "@trpc/client";
-import { createTRPCReact } from "@trpc/react-query";
-import { useState } from "react";
-import superjson from "superjson";
-import { type AppRouter } from "@/server";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-const getBaseUrl = () => {
-  if (typeof window !== "undefined") return ""; // browser should use relative url
-  if (process.env.NEXT_PUBLIC_API_URL)
-    return `https://${process.env.NEXT_PUBLIC_API_URL}`; // SSR should use vercel url
-  return `http://127.0.0.1:${process.env.PORT ?? 3000}`; // dev SSR should use localhost
-};
+import { useState } from "react";
+import { type AppRouter } from "@/server/api/root";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+// eslint-disable-next-line camelcase
+import { loggerLink, unstable_httpBatchStreamLink } from "@trpc/client";
+import { createTRPCReact } from "@trpc/react-query";
+
+import { getUrl, transformer } from "./shared";
 
 export const api = createTRPCReact<AppRouter>();
 
-export const QueryProvider = ({ children }: { children: React.ReactNode }) => {
-  const url = `${getBaseUrl()}/api/trpc`;
-
+export function TRPCReactProvider(props: {
+  children: React.ReactNode;
+  cookies: string;
+}) {
   const [queryClient] = useState(() => new QueryClient());
+
   const [trpcClient] = useState(() =>
     api.createClient({
+      transformer,
       links: [
         loggerLink({
-          enabled: (opts) =>
+          enabled: (op) =>
             process.env.NODE_ENV === "development" ||
-            (opts.direction === "down" && opts.result instanceof Error),
+            (op.direction === "down" && op.result instanceof Error),
         }),
-        httpBatchLink({ url }),
+        unstable_httpBatchStreamLink({
+          url: getUrl(),
+          headers() {
+            return {
+              cookie: props.cookies,
+              "x-trpc-source": "react",
+            };
+          },
+        }),
       ],
-      transformer: superjson,
     })
   );
 
   return (
-    <api.Provider client={trpcClient} queryClient={queryClient}>
-      <QueryClientProvider client={queryClient}>
-        <ReactQueryDevtools initialIsOpen={false} />
-        {children}
-      </QueryClientProvider>
-    </api.Provider>
+    <QueryClientProvider client={queryClient}>
+      <api.Provider client={trpcClient} queryClient={queryClient}>
+        {props.children}
+      </api.Provider>
+    </QueryClientProvider>
   );
-};
+}

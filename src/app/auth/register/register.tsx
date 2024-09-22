@@ -6,12 +6,15 @@ import RegisterModule, {
 import React, { useRef, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { api } from "@/utils/api";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
 
 const RegisterPage = () => {
   const ref = useRef<RegisterFormRefType>(null);
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-  const mutation = api.auth.registerUser.useMutation();
+  const { mutate: registerAccount } = api.auth.registerUser.useMutation();
+  const router = useRouter();
 
   const handleRegister: SubmitHandler<UserValues> = async (values) => {
     setLoading(true);
@@ -20,8 +23,18 @@ const RegisterPage = () => {
       email: values.email,
       password: values.password,
     };
-    console.log(sendData);
-    mutation.mutate(sendData);
+
+    registerAccount(sendData, {
+      onSuccess: () => {
+        setLoading(false);
+        toast.success("Akun anda teregistrasi");
+        router.push("/");
+      },
+      onError: () => {
+        toast.error("Akun anda sudah terdaftar");
+        setLoading(false);
+      },
+    });
 
     setErrMsg("");
   };
