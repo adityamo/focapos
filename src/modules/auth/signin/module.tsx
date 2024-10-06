@@ -58,10 +58,10 @@ const SignInModule: ForwardRefRenderFunction<SignInFormRefType, Props> = (
       <div className="mb-16 mt-10 w-full lg:px-16 lg:py-5">
         <div className="text-start space-y-3 ">
           <h4 className="text-lg lg:text-3xl text-slate-700 font-semibold">
-            Registrasi Aplikasi Foca
+            Masuk Aplikasi Foca
           </h4>
           <p className="text-gray-400 text-xs lg:text-sm font-normal">
-            Silahkan daftar akun anda disini
+            Silahkan masuk dengan akun aplikasi anda
           </p>
         </div>
 

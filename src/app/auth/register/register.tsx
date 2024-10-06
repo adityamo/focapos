@@ -7,7 +7,7 @@ import React, { useRef, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 import { api } from "@/utils/api";
 import { toast } from "react-toastify";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 const RegisterPage = () => {
   const ref = useRef<RegisterFormRefType>(null);

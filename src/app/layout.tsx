@@ -14,16 +14,16 @@ export const metadata: Metadata = {
   keywords: ["Point Of Sale", "Pos", "Aplikasi Kasir"],
   icons: {
     icon: [
-      // {
-      //   media: "(prefers-color-scheme: light)",
-      //   url: "/img/brand/smalllogo.png",
-      //   href: "/img/brand/smalllogo.png",
-      // },
-      // {
-      //   media: "(prefers-color-scheme: dark)",
-      //   url: "/img/brand/smalllogo.png",
-      //   href: "/img/brand/smalllogo.png",
-      // },
+      {
+        media: "(prefers-color-scheme: light)",
+        url: "/assets/icon/logo/logo-bg-color.png",
+        href: "/assets/icon/logo/logo-bg-color.png",
+      },
+      {
+        media: "(prefers-color-scheme: dark)",
+        url: "/assets/icon/logo/logo-bg-color.png",
+        href: "/assets/icon/logo/logo-bg-color.png",
+      },
     ],
   },
 };
