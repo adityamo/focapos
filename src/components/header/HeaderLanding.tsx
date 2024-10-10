@@ -2,14 +2,12 @@
 import React, { useState } from "react";
 import { siteConfig } from "@/config/site";
 import Link from "next/link";
-import { useRouter, useSelectedLayoutSegment } from "next/navigation";
+import { useSelectedLayoutSegment } from "next/navigation";
 
 const HeaderLanding = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const selectedLayoutSegment = useSelectedLayoutSegment();
   const pathname = selectedLayoutSegment ? `/${selectedLayoutSegment}` : "/";
-
-  const router = useRouter();
 
   function toogleMenu() {
     if (!isMenuOpen) {
@@ -33,21 +31,19 @@ const HeaderLanding = () => {
         </a>
 
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
-          <button
-            type="button"
+          <Link
+            href={"/auth/signin"}
             className="py-2 px-3 me-2 hidden lg:inline-flex items-center gap-x-2 text-sm font-medium rounded-xl bg-white border border-gray-200 text-black hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:hover:bg-white/10 dark:text-white dark:hover:text-white dark:focus:text-white"
           >
             Masuk
-          </button>
-          <button
-            type="button"
+          </Link>
+
+          <Link
+            href={"/auth/register"}
             className="py-2 px-3 hidden lg:inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-transparent bg-indigo-700 text-white hover:bg-indigo-700 focus:outline-none focus:bg-lime-500 transition disabled:opacity-50 disabled:pointer-events-none"
-            onClick={() => {
-              router.push("/auth/register");
-            }}
           >
             Daftar
-          </button>
+          </Link>
 
           <button
             data-collapse-toggle="navbar-sticky"

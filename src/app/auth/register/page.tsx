@@ -1,10 +1,5 @@
-"use client";
+import RegisterPage from "./register";
 
-import RegisterModule from "@/modules/auth/register/module";
-import React from "react";
-
-const RegisterPage = () => {
-  return <RegisterModule />;
-};
-
-export default RegisterPage;
+export default async function page() {
+  return <RegisterPage />;
+}

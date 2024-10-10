@@ -4,6 +4,9 @@ import { siteConfig } from "@/config/site";
 import type { Metadata } from "next";
 import { ReactNode } from "react";
 import NextTopLoader from "nextjs-toploader";
+import { Providers } from "@/providers";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/ReactToastify.css";
 
 export const metadata: Metadata = {
   title: siteConfig.name,
@@ -11,28 +14,30 @@ export const metadata: Metadata = {
   keywords: ["Point Of Sale", "Pos", "Aplikasi Kasir"],
   icons: {
     icon: [
-      // {
-      //   media: "(prefers-color-scheme: light)",
-      //   url: "/img/brand/smalllogo.png",
-      //   href: "/img/brand/smalllogo.png",
-      // },
-      // {
-      //   media: "(prefers-color-scheme: dark)",
-      //   url: "/img/brand/smalllogo.png",
-      //   href: "/img/brand/smalllogo.png",
-      // },
+      {
+        media: "(prefers-color-scheme: light)",
+        url: "/assets/icon/logo/logo-bg-color.png",
+        href: "/assets/icon/logo/logo-bg-color.png",
+      },
+      {
+        media: "(prefers-color-scheme: dark)",
+        url: "/assets/icon/logo/logo-bg-color.png",
+        href: "/assets/icon/logo/logo-bg-color.png",
+      },
     ],
   },
 };
 
 type Props = {
   children: ReactNode;
-  // params: { locale: string; session: any };
 };
 
 export default async function RootLayout({ children }: Props) {
   return (
     <html className="">
+      <head className="">
+        <link rel="stylesheet" href="/assets/iconfonts/icons.css" />
+      </head>
       <body className={`${fontSans.className}`}>
         <NextTopLoader
           color="#F5AD0D"
@@ -45,7 +50,17 @@ export default async function RootLayout({ children }: Props) {
           speed={200}
           shadow="0 0 10px #2299DD,0 0 5px #2299DD"
         />
-        {children}
+        <ToastContainer
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
