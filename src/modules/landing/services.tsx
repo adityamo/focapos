@@ -22,7 +22,7 @@ const ServicesLanding = () => {
             <div className="px-2 lg:px-10 py-5 border border-gray-300 rounded-lg">
               <div className="grid lg:grid-cols-2 gap-4">
                 <div className="flex flex-row lg:flex-col items-center text-start lg:text-center lg:border-r-2 border-gray-200 p-2 space-y-2">
-                  <div className="bg-indigo-100 flex h-[50px] w-full max-w-[50px] items-center justify-center rounded-full bg-primary text-white sm:mr-6 sm:h-[60px] sm:max-w-[60px] md:mr-4 md:h-[50px] md:max-w-[50px] xl:mr-6 xl:h-[60px] xl:max-w-[60px]">
+                  <div className="bg-indigo-100 flex h-[50px] w-full max-w-[50px] items-center justify-center rounded-full  text-white sm:mr-6 sm:h-[60px] sm:max-w-[60px] md:mr-4 md:h-[50px] md:max-w-[50px] xl:mr-6 xl:h-[60px] xl:max-w-[60px]">
                     <img
                       src="/assets/icon/hero/icon-1.svg"
                       alt=""
@@ -39,7 +39,7 @@ const ServicesLanding = () => {
                   </div>
                 </div>
                 <div className="flex flex-row lg:flex-col items-center text-start lg:text-center p-2 space-y-2">
-                  <div className="bg-indigo-100 flex h-[50px] w-full max-w-[50px] items-center justify-center rounded-full bg-primary text-white sm:mr-6 sm:h-[60px] sm:max-w-[60px] md:mr-4 md:h-[50px] md:max-w-[50px] xl:mr-6 xl:h-[60px] xl:max-w-[60px]">
+                  <div className="bg-indigo-100 flex h-[50px] w-full max-w-[50px] items-center justify-center rounded-full  text-white sm:mr-6 sm:h-[60px] sm:max-w-[60px] md:mr-4 md:h-[50px] md:max-w-[50px] xl:mr-6 xl:h-[60px] xl:max-w-[60px]">
                     <img
                       src="/assets/icon/hero/icon-2.svg"
                       alt=""
@@ -57,7 +57,7 @@ const ServicesLanding = () => {
                   </div>
                 </div>
                 <div className="flex flex-row lg:flex-col items-center text-start lg:text-center  lg:border-r p-2 space-y-2">
-                  <div className="bg-indigo-100 flex h-[50px] w-full max-w-[50px] items-center justify-center rounded-full bg-primary text-white sm:mr-6 sm:h-[60px] sm:max-w-[60px] md:mr-4 md:h-[50px] md:max-w-[50px] xl:mr-6 xl:h-[60px] xl:max-w-[60px]">
+                  <div className="bg-indigo-100 flex h-[50px] w-full max-w-[50px] items-center justify-center rounded-full  text-white sm:mr-6 sm:h-[60px] sm:max-w-[60px] md:mr-4 md:h-[50px] md:max-w-[50px] xl:mr-6 xl:h-[60px] xl:max-w-[60px]">
                     <img
                       src="/assets/icon/hero/icon-3.svg"
                       alt=""
@@ -75,11 +75,11 @@ const ServicesLanding = () => {
                   </div>
                 </div>
                 <div className="flex flex-row lg:flex-col items-center text-start lg:text-center p-2 space-y-2">
-                  <div className="bg-indigo-100 flex h-[50px] w-full max-w-[50px] items-center justify-center rounded-full bg-primary text-white sm:mr-6 sm:h-[60px] sm:max-w-[60px] md:mr-4 md:h-[50px] md:max-w-[50px] xl:mr-6 xl:h-[60px] xl:max-w-[60px]">
+                  <div className="bg-indigo-100 flex h-[50px] w-full max-w-[50px] items-center justify-center rounded-full  text-white sm:mr-6 sm:h-[60px] sm:max-w-[60px] md:mr-4 md:h-[50px] md:max-w-[50px] xl:mr-6 xl:h-[60px] xl:max-w-[60px]">
                     <img
                       src="/assets/icon/hero/icon-4.svg"
                       alt=""
-                      className="h-30 w-30 lg:h-[550px] lg:w-[550px]"
+                      className="h-15 w-15 lg:h-15 lg:w-15"
                     />
                   </div>
                   <div className="flex flex-col lg:flex-col ms-5 lg:ms-0">

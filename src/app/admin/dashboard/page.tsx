@@ -1,7 +1,14 @@
 import React from "react";
+import DasboardAdmin from "@/modules/dashboard/DasboardAdmin";
+import PenjualanChart from "@/modules/dashboard/PenjualanChart";
 
-const page = () => {
-  return <div>page</div>;
+const Dashboard = () => {
+  return (
+    <>
+      <DasboardAdmin />
+      <PenjualanChart />
+    </>
+  );
 };
 
-export default page;
+export default Dashboard;

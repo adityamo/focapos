@@ -7,6 +7,7 @@ import Image from "next/image";
 import SidebarItem from "./SidebarItem";
 import ClickOutside from "@/components/clickoutside";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import { FiCodesandbox } from "react-icons/fi";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -366,10 +367,18 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           </button>
         </div>
         {/* <!-- SIDEBAR HEADER --> */}
-
+        <div className="flex flex-col px-4 py-5 lg:px-6 lg:ml-4">
+          <div className="flex flex-row items-center text-white">
+            <FiCodesandbox className="me-4 h-8 w-8" />
+            <div>
+              <p className="text-sm font-normal ">Outlet</p>
+              <h4 className="text-lg font-semibold">Juju Kitchen</h4>
+            </div>
+          </div>
+        </div>
         <div className="no-scrollbar flex flex-col overflow-y-auto duration-300 ease-linear">
           {/* <!-- Sidebar Menu --> */}
-          <nav className="mt-5 px-4 py-4 lg:mt-9 lg:px-6">
+          <nav className="mt-5 px-4 py-4 lg:mt-0 lg:px-6">
             {menuGroups.map((group, groupIndex) => (
               <div key={groupIndex}>
                 <h3 className="mb-4 ml-4 text-xs font-semibold text-white">
