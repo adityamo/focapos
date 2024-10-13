@@ -15,6 +15,7 @@ import {
 } from "react-hook-form";
 import InputPassword from "@/components/inputs/InputPassword";
 import { UserValues } from "@/interface/user";
+import Link from "next/link";
 
 interface Props {
   onSubmit: SubmitHandler<UserValues>;
@@ -57,7 +58,7 @@ const RegisterModule: ForwardRefRenderFunction<RegisterFormRefType, Props> = (
 
   return (
     <AuthDefault>
-      <div className="mb-16 mt-10 w-full lg:px-16 lg:py-5">
+      <div className="mb-16 mt-5 w-full lg:px-16 lg:py-5 ">
         <div className="text-start space-y-3 ">
           <h4 className="text-lg lg:text-3xl text-slate-700 font-semibold">
             Registrasi Aplikasi Foca
@@ -154,6 +155,17 @@ const RegisterModule: ForwardRefRenderFunction<RegisterFormRefType, Props> = (
             </button>
           </div>
         </form>
+        <div className="flex w-full justify-center items-center">
+          <p className="text-gray-500 text-sm">
+            Sudah punya akun ?{" "}
+            <Link
+              href={"/auth/signin"}
+              className="text-indigo-700 font-semibold"
+            >
+              Masuk
+            </Link>
+          </p>
+        </div>
       </div>
     </AuthDefault>
   );

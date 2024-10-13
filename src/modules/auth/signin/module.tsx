@@ -15,6 +15,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import AuthDefault from "@/components/authlayout/AuthDefault";
 import InputText from "@/components/inputs/InputText";
 import InputPassword from "@/components/inputs/InputPassword";
+import Link from "next/link";
 
 interface Props {
   onSubmit: SubmitHandler<UserLogin>;
@@ -114,6 +115,9 @@ const SignInModule: ForwardRefRenderFunction<SignInFormRefType, Props> = (
               placeholder="password"
               control={control}
             />
+            <Link href={""} className="font-normal text-sm text-indigo-700">
+              Lupa password ?
+            </Link>
             <button
               type="submit"
               className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-indigo-700 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none"
@@ -141,11 +145,19 @@ const SignInModule: ForwardRefRenderFunction<SignInFormRefType, Props> = (
                   Signing...
                 </>
               ) : (
-                "Registrasi Akun"
+                "Masuk"
               )}
             </button>
           </div>
         </form>
+        <div className="flex w-full justify-center pt-4 items-center">
+          <p className="text-gray-500 text-sm">
+            Belum punya akun foca ?
+            <Link href={"/auth/register"}>
+              <span className="text-indigo-700 ms-2 font-semibold">Daftar</span>
+            </Link>
+          </p>
+        </div>
       </div>
     </AuthDefault>
   );
