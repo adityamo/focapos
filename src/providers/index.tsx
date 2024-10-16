@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { AuthProvider } from "@/server/AuthProvider";
+import { AuthProvider } from "./AuthProvider";
 import { TRPCReactProvider } from "@/utils/api";
 // import { QueryProvider } from "@/utils/api";
 

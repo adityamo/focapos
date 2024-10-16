@@ -9,7 +9,8 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  // provider = "mysql"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -34,15 +35,14 @@ model Account {
   providerAccountId String
   refresh_token     String?   @default("")
   access_token      String?   @default("")
+  oauth_token       String?
+  oauth_token_secret String?
   expires_at        Int?
   token_type        String?
   scope             String?
   id_token          String?
   session_state     String?
-  oauth_token       String?
-  oauth_token_secret String?
-
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -52,6 +52,5 @@ model Session {
   sessionToken String    @unique
   userId       Int
   expires      DateTime
-
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
