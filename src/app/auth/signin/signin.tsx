@@ -21,13 +21,13 @@ const SignInPage = () => {
     });
 
     if (res?.error) {
-      setLoading(false);
       setErrMsg("Please check username or password");
     } else if (res?.ok) {
-      setLoading(false);
       setErrMsg("");
       router.push("/admin/dashboard");
     }
+
+    setLoading(false);
   };
 
   return (
