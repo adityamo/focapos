@@ -21,10 +21,13 @@ model User {
   emailVerified DateTime?
   image         String?
   password      String?
+  roles_id      Int     
   accounts      Account[]
   sessions      Session[]
+  M001_Company  M001_Company?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  M1001_Roles   M1001_Roles @relation(fields: [roles_id], references: [id])
 }
 
 model Account {
@@ -43,6 +46,7 @@ model Account {
   id_token          String?
   session_state     String?
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+   
 
   @@unique([provider, providerAccountId])
 }
@@ -54,3 +58,58 @@ model Session {
   expires      DateTime
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+model M1001_Roles {
+  id              Int       @id @default(autoincrement())   
+  roles_name      String
+  createdAt       DateTime  @default(now())
+  updateAt        DateTime  @updatedAt
+  user            User[]
+}
+
+model M001_Company {
+  id                Int       @id @default(autoincrement())
+  company_name      String
+  company_owner     String
+  business_typeID   Int       @unique
+  userId            Int       @unique
+  operational_time  String?
+  province_code     String
+  city_code         String
+  district_code     String
+  isActive          Boolean
+  createdAt         DateTime  @default(now())
+  createBy          Int
+  updatedAt         DateTime  @updatedAt
+  updateBy          Int
+  M002_businessType M002_BusinessType @relation(fields: [business_typeID], references: [id])
+  user              User @relation(fields: [userId], references: [id])
+}
+
+model M002_BusinessType {
+  id              Int     @id @default(autoincrement())
+  name            String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  M001_Company    M001_Company? 
+}
+
+
+model M003_Store {
+  id            Int     @id @default(autoincrement())
+  company_id    Int     @unique
+  store_name    String
+  address       String
+  phone         String  
+  bank_tf       String
+  logo_small    String
+  logo_big      String
+  footer_faktur String
+  isActive      Boolean
+  createdAt         DateTime  @default(now())
+  createBy          Int
+  updatedAt         DateTime  @updatedAt
+  updateBy          Int
+}
+
+

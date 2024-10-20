@@ -29,13 +29,17 @@ export type RegisterFormRefType = {
 };
 
 const schema = Yup.object().shape({
-  name: Yup.string().required("Username cannot empty"),
+  name: Yup.string().required("Username tidak boleh kosong"),
   email: Yup.string()
-    .email("Invalid Email Format")
-    .required("Email Cannot Empty"),
+    .email("format email tidak cocok")
+    .required("Email tidak boleh kosong"),
   password: Yup.string()
-    .min(3, "Your Password to less")
-    .required("Password cannot empty"),
+    .min(3, "Password anda terlalu pendek")
+    .required("Password tidak boleh kosong"),
+  confirm_password: Yup.string()
+    .oneOf([Yup.ref("password"), ""], "Password anda tidak sesuai")
+    .min(3, "Password anda terlalu pendek")
+    .required("Password tidak boleh kosong"),
 });
 
 const RegisterModule: ForwardRefRenderFunction<RegisterFormRefType, Props> = (
@@ -48,6 +52,7 @@ const RegisterModule: ForwardRefRenderFunction<RegisterFormRefType, Props> = (
       name: "",
       password: "",
       email: "",
+      confirm_password: "",
     },
   });
 
@@ -68,7 +73,7 @@ const RegisterModule: ForwardRefRenderFunction<RegisterFormRefType, Props> = (
           </p>
         </div>
 
-        <div className="mt-5 flex w-full">
+        {/* <div className="mt-5 flex w-full">
           <button
             type="button"
             className="w-full py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-lg  bg-indigo-50 text-gray-800 shadow-sm hover:bg-indigo-100 focus:outline-none focus:bg-indigo-100 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
@@ -102,8 +107,8 @@ const RegisterModule: ForwardRefRenderFunction<RegisterFormRefType, Props> = (
         </div>
         <div className="py-5 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-neutral-500 dark:before:border-neutral-600 dark:after:border-neutral-600">
           Atau
-        </div>
-        <form className="py-2" onSubmit={handleSubmit(onSubmit)}>
+        </div> */}
+        <form className="py-5 lg:py-7" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-y-4">
             <InputText
               name="name"
@@ -121,6 +126,12 @@ const RegisterModule: ForwardRefRenderFunction<RegisterFormRefType, Props> = (
               name="password"
               label="Password"
               placeholder="password"
+              control={control}
+            />
+            <InputPassword
+              name="confirm_password"
+              label="Konfirmasi Ulang Password"
+              placeholder="Konfirmasi Password"
               control={control}
             />
             <button
