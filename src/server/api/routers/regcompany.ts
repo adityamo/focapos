@@ -1,16 +1,8 @@
-import {
-  createTRPCRouter,
-  //   protectedProcedure,
-  publicProcedure,
-} from "@/server/api/trpc";
-// import { prisma } from "@/server/db";
+import { createTRPCRouter } from "@/server/api/trpc";
+import { publicProcedure } from "@/server/api/trpc";
 
 export const registerBusiness = createTRPCRouter({
-  getTypeCompany: publicProcedure.query(async ({ ctx }) => {
-    const data = await ctx.prisma.m002_BusinessType.findMany();
-    return data;
-    // Cara client side
-    // const ddl = await prisma.m002_BusinessType.findMany();
-    // return ddl;
+  getTypeCompany: publicProcedure.query(({ ctx }) => {
+    return ctx.prisma.m002_BusinessType.findMany();
   }),
 });

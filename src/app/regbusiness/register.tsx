@@ -4,7 +4,12 @@ import FormBisnis from "@/modules/regbusiness/FormBisnis";
 // import { api } from "@/utils/api";
 import React, { useState } from "react";
 
-const RegisterBusiness = () => {
+interface Props {
+  ddlData: any;
+}
+
+const RegisterBusiness = ({ ddlData }: Props) => {
+  console.log(ddlData);
   const [formStep, setFormStep] = useState(1);
   const steps = ["Informasi Bisnis", "Buat Toko", "Selesai"];
 
