@@ -13,9 +13,9 @@ const FooterLanding = () => {
             <div className="mb-6 md:mb-0">
               <a href="https://flowbite.com/" className="flex items-center">
                 <img
-                  src="https://flowbite.com/docs/images/logo.svg"
-                  className="h-8 me-3"
-                  alt="FlowBite Logo"
+                  src={"/assets/icon/logo/logo-big-color.svg"}
+                  alt=""
+                  className=""
                 />
 
                 <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">

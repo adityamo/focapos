@@ -21,13 +21,14 @@ const HeaderLanding = () => {
     <header className="bg-[#4136C5] shadow-sm backdrop-blur-md sticky w-full z-20 top-0 start-0">
       <nav className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
         <a
-          className="flex-none font-semibold text-xl text-black focus:outline-none focus:opacity-80 dark:text-white"
-          href="#"
+          className="flex font-semibold text-xl text-black focus:outline-none focus:opacity-80 dark:text-white"
+          href="/"
           aria-label="Brand"
         >
-          <h5 className="font-normal text-lg lg:text-xl text-white">
+          <img src={"/assets/icon/logo/logo-white.svg"} alt="" className="" />
+          {/* <h5 className="font-normal text-lg lg:text-xl text-white">
             Foca<span className="font-bold">POS</span>
-          </h5>
+          </h5> */}
         </a>
 
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
@@ -48,7 +49,7 @@ const HeaderLanding = () => {
           <button
             data-collapse-toggle="navbar-sticky"
             type="button"
-            className="inline-flex items-center p-2 w-8 h-8 justify-center text-sm text-white rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+            className="inline-flex items-center p-2 w-8 h-8 justify-center text-sm text-white rounded-lg md:hidden hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
             aria-controls="navbar-sticky"
             aria-expanded="false"
             onClick={toogleMenu}
@@ -111,6 +112,21 @@ const HeaderLanding = () => {
               </li>
             );
           })}
+          <li className="flex items-center py-4 mt-2 px-3 space-x-2 border-t border-white">
+            <Link
+              href={"/auth/signin"}
+              className="py-2 px-3 me-2 lg:inline-flex items-center gap-x-2 text-sm font-medium rounded-xl bg-white border border-gray-200 text-black hover:bg-gray-100 focus:outline-none focus:bg-indigo-100 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:hover:bg-white/10 dark:text-white dark:hover:text-white dark:focus:text-white"
+            >
+              Masuk
+            </Link>
+
+            <Link
+              href={"/auth/register"}
+              className="py-2 px-3 lg:inline-flex items-center gap-x-2 text-sm font-medium rounded-xl border border-transparent bg-indigo-900 text-white hover:bg-indigo-700 focus:outline-none focus:bg-lime-500 transition disabled:opacity-50 disabled:pointer-events-none"
+            >
+              Daftar
+            </Link>
+          </li>
         </ul>
       </div>
       {/* End Navigation Mobile */}
