@@ -1,24 +1,19 @@
 "use client";
 import FormSteps from "@/components/formsteps";
 import FormBisnis from "@/modules/regbusiness/FormBisnis";
-// import { api } from "@/utils/api";
 import React, { useState } from "react";
 
 interface Props {
   ddlData: any;
+  steps: any;
 }
 
-const RegisterBusiness = ({ ddlData }: Props) => {
-  console.log(ddlData);
+const RegisterBusiness = ({ ddlData, steps }: Props) => {
   const [formStep, setFormStep] = useState(1);
-  const steps = ["Informasi Bisnis", "Buat Toko", "Selesai"];
 
   const nextFormStep = () => {
     setFormStep((currentStep) => currentStep + 1);
   };
-
-  // const { data: test } = api.regcompany.getTypeCompany.useQuery();
-  // console.log(test);
 
   // const prevFormStep = (e: any) => {
   //   e.preventDefault();
@@ -28,7 +23,7 @@ const RegisterBusiness = ({ ddlData }: Props) => {
   // const onSubmit = async (data: any) => {};
 
   return (
-    <div className="relative bg-gradient-to-b from-[#4136C5] to-[#221D68] h-screen">
+    <div className="relative bg-gradient-to-b from-[#4136C5] to-[#221D68] ">
       <div className="max-w-[85rem] px-4 py-10 sm:px-8 lg:py-10 mx-auto">
         <div className="mx-w-2xl mx-auto">
           <div className="flex w-full justify-center pb-4">
@@ -50,7 +45,11 @@ const RegisterBusiness = ({ ddlData }: Props) => {
         <div className="flex w-full justify-center">
           <FormSteps currentStep={formStep} steps={steps}>
             {formStep >= 1 && (
-              <FormBisnis formStep={formStep} nextFormStep={nextFormStep} />
+              <FormBisnis
+                formStep={formStep}
+                nextFormStep={nextFormStep}
+                typeBusiness={ddlData}
+              />
             )}
             {formStep >= 2 && <></>}
           </FormSteps>

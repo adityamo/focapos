@@ -7,3 +7,10 @@ export type BusinessValue = {
   city_code: string;
   district_code: string;
 };
+
+export type StoreValue = {
+  store_name: string;
+  address: string;
+  phone: string;
+  bank_tf: string;
+};
