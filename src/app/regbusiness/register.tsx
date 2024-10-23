@@ -1,26 +1,56 @@
 "use client";
 import FormSteps from "@/components/formsteps";
 import FormBisnis from "@/modules/regbusiness/FormBisnis";
+import FormStore from "@/modules/regbusiness/FormStore";
+import SuccessState from "@/modules/regbusiness/SuccessState";
 import React, { useState } from "react";
 
 interface Props {
   ddlData: any;
   steps: any;
+  idCustomer: any;
 }
 
-const RegisterBusiness = ({ ddlData, steps }: Props) => {
+const RegisterBusiness = ({ ddlData, steps, idCustomer }: Props) => {
   const [formStep, setFormStep] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const nextFormStep = () => {
     setFormStep((currentStep) => currentStep + 1);
   };
 
-  // const prevFormStep = (e: any) => {
-  //   e.preventDefault();
-  //   setFormStep((currentStep) => currentStep - 1);
-  // };
+  const prevFormStep = (e: any) => {
+    e.preventDefault();
+    setFormStep((currentStep) => currentStep - 1);
+  };
 
-  // const onSubmit = async (data: any) => {};
+  const onSubmit = async (data: any) => {
+    console.log(data);
+    setLoading(true);
+    const sendData = {
+      company: {
+        company_name: data.company_name,
+        comnpany_owner: data.company_owner,
+        business_typeID: data.business_typeID,
+        userId: idCustomer,
+        operational_time: data.operational_time,
+        province_code: data.province_code,
+        city_code: data.city_code,
+        district_code: data.district_code,
+        isActive: 1,
+        createdBy: idCustomer,
+        updatedBy: idCustomer,
+      },
+      store: {
+        store_name: data.store_name,
+        address: data.address,
+        phone: data.phone,
+        bank_tf: data.bank_tf,
+      },
+    };
+    console.log(sendData);
+    nextFormStep();
+  };
 
   return (
     <div className="relative bg-gradient-to-b from-[#4136C5] to-[#221D68] ">
@@ -51,7 +81,15 @@ const RegisterBusiness = ({ ddlData, steps }: Props) => {
                 typeBusiness={ddlData}
               />
             )}
-            {formStep >= 2 && <></>}
+            {formStep >= 2 && (
+              <FormStore
+                formStep={formStep}
+                prevFormStep={prevFormStep}
+                onSubmit={onSubmit}
+                isLoading={loading}
+              />
+            )}
+            {formStep >= 3 && <SuccessState formStep={formStep} />}
           </FormSteps>
         </div>
       </div>

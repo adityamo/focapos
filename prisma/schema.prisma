@@ -79,9 +79,9 @@ model M001_Company {
   district_code     String
   isActive          Boolean
   createdAt         DateTime  @default(now())
-  createBy          Int
+  createdBy         Int
   updatedAt         DateTime  @updatedAt
-  updateBy          Int
+  updatedBy         Int
   M002_businessType M002_BusinessType @relation(fields: [business_typeID], references: [id])
   user              User @relation(fields: [userId], references: [id])
 }
@@ -106,10 +106,10 @@ model M003_Store {
   logo_big      String
   footer_faktur String
   isActive      Boolean
-  createdAt         DateTime  @default(now())
-  createBy          Int
-  updatedAt         DateTime  @updatedAt
-  updateBy          Int
+  createdAt     DateTime  @default(now())
+  createdBy     Int
+  updatedAt     DateTime  @updatedAt
+  updatedBy     Int
 }
 
 

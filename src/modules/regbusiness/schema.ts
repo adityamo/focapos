@@ -9,3 +9,10 @@ export const formBisnisSchema = yup.object().shape({
   city_code: yup.string().required("Kota wajib diisi"),
   district_code: yup.string().required("Kecamatan wajib diisi"),
 });
+
+export const formStoreSchema = yup.object().shape({
+  store_name: yup.string().required("Nama Toko Wajib diisi"),
+  address: yup.string().required("Alamat Wajib diisi"),
+  phone: yup.string().required("Nomer telepon wajib diisi"),
+  bank_tf: yup.string().required("Nomer Rekening Wajib diisi"),
+});
