@@ -1,5 +1,6 @@
 "use client";
 import FormSteps from "@/components/formsteps";
+import { getDateTimeNow } from "@/helpers/FormatHelper";
 import FormBisnis from "@/modules/regbusiness/FormBisnis";
 import FormStore from "@/modules/regbusiness/FormStore";
 import SuccessState from "@/modules/regbusiness/SuccessState";
@@ -40,12 +41,17 @@ const RegisterBusiness = ({ ddlData, steps, idCustomer }: Props) => {
         isActive: 1,
         createdBy: idCustomer,
         updatedBy: idCustomer,
+        updateAt: getDateTimeNow(),
       },
       store: {
         store_name: data.store_name,
         address: data.address,
         phone: data.phone,
         bank_tf: data.bank_tf,
+        usActive: 1,
+        createdBy: idCustomer,
+        updatedBy: idCustomer,
+        updateAt: getDateTimeNow(),
       },
     };
     console.log(sendData);

@@ -29,13 +29,15 @@ export const authRouter = createTRPCRouter({
         throw new Error("User sudah terdaftar");
       }
 
+      const registerData: any = {
+        name: name,
+        password: passwordEncrypt,
+        email: email,
+        roles_id: 1,
+      };
+
       const user = await prisma.user.create({
-        data: {
-          name: name,
-          password: passwordEncrypt,
-          email: email,
-          roles_id: 2,
-        },
+        data: registerData,
       });
 
       return user;

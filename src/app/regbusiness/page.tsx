@@ -5,7 +5,8 @@ import { dropdownFormat } from "@/helpers/FormatHelper";
 
 export default async function page({ searchParams }: any) {
   const ddl: any = await api.regcompany.getTypeCompany.query();
-  const idCustomer = searchParams.code;
+  const userID = searchParams.user;
+
   let ddlFormat = [];
   if (ddl) {
     ddlFormat = dropdownFormat(ddl);
@@ -14,10 +15,6 @@ export default async function page({ searchParams }: any) {
   const steps = ["Informasi Bisnis", "Buat Toko", "Selesai"];
 
   return (
-    <RegisterBusiness
-      ddlData={ddlFormat}
-      steps={steps}
-      idCustomer={idCustomer}
-    />
+    <RegisterBusiness ddlData={ddlFormat} steps={steps} idCustomer={userID} />
   );
 }

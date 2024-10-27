@@ -64,15 +64,21 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async session({ session, token, user }: any) {
-      session.user.id = token.id;
-      return session;
-    },
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
       }
+
       return token;
+    },
+    async session({ session, token, user }: any) {
+      const dbUser = await prisma.user.findUnique({
+        where: { email: token.email },
+      });
+      session.user.id = token.id;
+      session.user.companyId = dbUser?.company_id;
+      session.user.storeId = dbUser?.store_id;
+      return session;
     },
   },
   secret: process.env.NEXTAUTH_SECRET,

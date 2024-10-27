@@ -15,29 +15,34 @@ datasource db {
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
+  id            Int             @id @default(autoincrement())
   name          String?
-  email         String    @unique
+  email         String          @unique
   emailVerified DateTime?
   image         String?
   password      String?
-  roles_id      Int     
+  isActive      Boolean?
+  roles_id      Int?
+  company_id    Int?
+  store_id      Int?    
   accounts      Account[]
   sessions      Session[]
-  M001_Company  M001_Company?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  M1001_Roles   M1001_Roles @relation(fields: [roles_id], references: [id])
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  M1001_Roles   M1001_Roles?     @relation(fields: [roles_id], references: [id])
+  M001_Company  M001_Company?    @relation(fields: [company_id], references: [id])
+  M003_Store    M003_Store?      @relation(fields: [store_id], references: [id])
+
 }
 
 model Account {
-  id                Int       @id @default(autoincrement())
+  id                Int         @id @default(autoincrement())
   userId            Int
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String?   @default("")
-  access_token      String?   @default("")
+  refresh_token     String?     @default("")
+  access_token      String?     @default("")
   oauth_token       String?
   oauth_token_secret String?
   expires_at        Int?
@@ -45,26 +50,25 @@ model Account {
   scope             String?
   id_token          String?
   session_state     String?
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-   
-
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade) 
   @@unique([provider, providerAccountId])
 }
 
 model Session {
-  id           Int       @id @default(autoincrement())
-  sessionToken String    @unique
+  id           Int            @id @default(autoincrement())
+  sessionToken String         @unique
   userId       Int
   expires      DateTime
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model M1001_Roles {
-  id              Int       @id @default(autoincrement())   
+  id              Int          @id @default(autoincrement())   
   roles_name      String
-  createdAt       DateTime  @default(now())
-  updateAt        DateTime  @updatedAt
+  createdAt       DateTime     @default(now())
+  updateAt        DateTime     @updatedAt
   user            User[]
+
 }
 
 model M001_Company {
@@ -72,18 +76,17 @@ model M001_Company {
   company_name      String
   company_owner     String
   business_typeID   Int       @unique
-  userId            Int       @unique
+  owner_id          Int       @unique
   operational_time  String?
   province_code     String
   city_code         String
   district_code     String
   isActive          Boolean
   createdAt         DateTime  @default(now())
-  createdBy         Int
   updatedAt         DateTime  @updatedAt
-  updatedBy         Int
   M002_businessType M002_BusinessType @relation(fields: [business_typeID], references: [id])
-  user              User @relation(fields: [userId], references: [id])
+  users             User[]
+
 }
 
 model M002_BusinessType {
@@ -91,7 +94,7 @@ model M002_BusinessType {
   name            String
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
-  M001_Company    M001_Company? 
+  M001_Company    M001_Company?   
 }
 
 
@@ -107,9 +110,19 @@ model M003_Store {
   footer_faktur String
   isActive      Boolean
   createdAt     DateTime  @default(now())
-  createdBy     Int
   updatedAt     DateTime  @updatedAt
-  updatedBy     Int
+  user          User[]
+}
+
+model M1002_DataBank {
+  id      Int     @id @default(autoincrement())
+  name    String
+  type    String
+  code    String  @db.VarChar(3)
+  address String?
+  phone   String? @db.VarChar(41)
+  fax     String? @db.VarChar(51)
+  website String?
 }
 
 

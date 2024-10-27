@@ -20,3 +20,7 @@ export const RegisterSchema = z.object({
     })
     .min(2, { message: "Minimal 5 Karakter" }),
 });
+
+export const CheckCompanySchema = z.object({
+  id: z.number(),
+});

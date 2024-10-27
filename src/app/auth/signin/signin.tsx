@@ -1,19 +1,24 @@
 "use client";
 import { UserLogin } from "@/interface/user";
 import SignInModule, { SignInFormRefType } from "@/modules/auth/signin";
-import { signIn } from "next-auth/react";
+
+import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 import { SubmitHandler } from "react-hook-form";
+// import { decryptHelp, encryptHelp } from "@/helpers/Encrypted";
 
 const SignInPage = () => {
   const ref = useRef<SignInFormRefType>(null);
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
-
+  const { data: session }: any = useSession();
   const router = useRouter();
+
   const handleSigIn: SubmitHandler<UserLogin> = async (values) => {
     setLoading(true);
+    setErrMsg("");
+
     const res = await signIn("credentials", {
       email: values.email,
       password: values.password,
@@ -21,10 +26,20 @@ const SignInPage = () => {
     });
 
     if (res?.error) {
-      setErrMsg("Please check username or password");
+      setErrMsg("Email dan Password tidak sesuai");
     } else if (res?.ok) {
       setErrMsg("");
-      router.push("/admin/dashboard");
+      setLoading(false);
+      const haveCompany = session?.user?.companyId ? true : false;
+
+      // const userID = encryptID(session?.user?.id);
+      const userID = session?.user?.id;
+
+      if (haveCompany) {
+        router.push("/admin/dashboard");
+      } else {
+        router.push(`/regbusiness?user=${userID}`);
+      }
     }
 
     setLoading(false);

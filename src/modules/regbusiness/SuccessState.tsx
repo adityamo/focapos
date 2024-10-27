@@ -1,5 +1,7 @@
 import React from "react";
 import Image from "next/image";
+import { FiArrowRight } from "react-icons/fi";
+import Link from "next/link";
 
 interface Props {
   formStep: any;
@@ -29,12 +31,14 @@ const SuccessState = ({ formStep }: Props) => {
         </div>
         <div className="flex w-full border-t border-gray-300 mt-5">
           <div className="mt-4 flex w-full justify-end">
-            <button
+            <Link
+              href="/auth/signin"
               type="submit"
-              className="text-white bg-indigo-700 px-5 py-2 font-semibold rounded-md text-sm hover:bg-indigo-800 shadow-sm"
+              className="flex items-center text-white bg-indigo-700 px-5 py-2 font-semibold rounded-md text-sm hover:bg-indigo-800 shadow-sm"
             >
-              Ke Dashboard
-            </button>
+              Silahkan Masuk
+              <FiArrowRight className="ms-4" />
+            </Link>
           </div>
         </div>
       </div>
