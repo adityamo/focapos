@@ -4,7 +4,7 @@ import path from "path";
 export async function getJsonData(filename: string) {
   try {
     const json = await fs.readFile(
-      path.join(process.cwd(), `/data/${filename}.json`),
+      path.join(process.cwd(), `src/data/${filename}.json`),
       "utf-8"
     );
     return JSON.parse(json);

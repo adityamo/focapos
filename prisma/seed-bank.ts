@@ -3,13 +3,19 @@ import { getJsonData } from "./utils";
 
 const prisma = new PrismaClient();
 
-async function createRegion() {
-  const data = await getJsonData("id-bank");
-  const uMap = (i: { name?: string; code?: string }) => ({
-    name: "".concat(i.name || ""),
-    code: "".concat(i.code || ""),
-    type: "",
-    address: "",
+interface BankData {
+  name?: string;
+  code?: string;
+  type?: string;
+}
+
+async function createBank() {
+  const data: BankData[] = await getJsonData("id-bank");
+
+  const uMap = (i: BankData) => ({
+    name: i.name || "",
+    code: i.code || "",
+    type: i.type || "", // Remove if not in the schema
   });
 
   for (const bank of data) {
@@ -20,7 +26,7 @@ async function createRegion() {
 }
 
 async function main() {
-  await createRegion();
+  await createBank();
 }
 
 main()

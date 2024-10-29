@@ -1,4 +1,5 @@
 "use client";
+import { encryptID } from "@/helpers/EncryptHelper";
 import { UserLogin } from "@/interface/user";
 import SignInModule, { SignInFormRefType } from "@/modules/auth/signin";
 
@@ -32,8 +33,9 @@ const SignInPage = () => {
       setLoading(false);
       const haveCompany = session?.user?.companyId ? true : false;
 
-      // const userID = encryptID(session?.user?.id);
-      const userID = session?.user?.id;
+      const userID = encryptID(session?.user?.id);
+
+      // const userID = session?.user?.id;
 
       if (haveCompany) {
         router.push("/admin/dashboard");

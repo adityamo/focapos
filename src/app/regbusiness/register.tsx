@@ -1,5 +1,6 @@
 "use client";
 import FormSteps from "@/components/formsteps";
+import { decryptID } from "@/helpers/EncryptHelper";
 import { getDateTimeNow } from "@/helpers/FormatHelper";
 import FormBisnis from "@/modules/regbusiness/FormBisnis";
 import FormStore from "@/modules/regbusiness/FormStore";
@@ -13,6 +14,8 @@ interface Props {
 }
 
 const RegisterBusiness = ({ ddlData, steps, idCustomer }: Props) => {
+  const findID = decryptID(idCustomer);
+  console.log(findID);
   const [formStep, setFormStep] = useState(1);
   const [loading, setLoading] = useState(false);
 
