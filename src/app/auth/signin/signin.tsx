@@ -2,6 +2,7 @@
 import { encryptID } from "@/helpers/EncryptHelper";
 import { UserLogin } from "@/interface/user";
 import SignInModule, { SignInFormRefType } from "@/modules/auth/signin";
+import { api } from "@/utils/api";
 
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -11,10 +12,19 @@ import { SubmitHandler } from "react-hook-form";
 
 const SignInPage = () => {
   const ref = useRef<SignInFormRefType>(null);
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [errMsg, setErrMsg] = useState("");
   const { data: session }: any = useSession();
   const router = useRouter();
+
+  const { data: companyStatus, refetch } =
+    api.regcompany.checkHaveCompany.useQuery(
+      { email },
+      {
+        enabled: false, // Agar query hanya dijalankan secara manual
+      }
+    );
 
   const handleSigIn: SubmitHandler<UserLogin> = async (values) => {
     setLoading(true);
@@ -31,13 +41,15 @@ const SignInPage = () => {
     } else if (res?.ok) {
       setErrMsg("");
       setLoading(false);
-      const haveCompany = session?.user?.companyId ? true : false;
+      setEmail(values.email);
 
+      // const haveCompany = session?.user?.companyId ? true : false;
+      checkCompany();
       const userID = encryptID(session?.user?.id);
 
       // const userID = session?.user?.id;
 
-      if (haveCompany) {
+      if (companyStatus) {
         router.push("/admin/dashboard");
       } else {
         router.push(`/regbusiness?user=${userID}`);
@@ -45,6 +57,12 @@ const SignInPage = () => {
     }
 
     setLoading(false);
+  };
+
+  const checkCompany = () => {
+    if (email) {
+      refetch();
+    }
   };
 
   return (

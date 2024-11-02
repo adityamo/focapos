@@ -12,5 +12,6 @@ export type StoreValue = {
   store_name: string;
   address: string;
   phone: string;
+  bank_type: string;
   bank_tf: string;
 };

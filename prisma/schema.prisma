@@ -102,12 +102,13 @@ model M003_Store {
   id            Int     @id @default(autoincrement())
   company_id    Int     @unique
   store_name    String
-  address       String
-  phone         String  
+  address       String?
+  phone         String? 
+  bank_type     Int?  
   bank_tf       String
-  logo_small    String
-  logo_big      String
-  footer_faktur String
+  logo_small    String?
+  logo_big      String?
+  footer_faktur String?
   isActive      Boolean
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt

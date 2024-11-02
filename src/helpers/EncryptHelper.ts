@@ -11,9 +11,33 @@ export function encryptID(text: any) {
 }
 
 export function decryptID(text: any) {
-  const decodedCipherText = CryptoJS.enc.Base64.parse(text).toString(
-    CryptoJS.enc.Utf8
-  );
-  const bytes = CryptoJS.AES.decrypt(decodedCipherText, secretKey);
-  return JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+  if (!text) {
+    console.error("Input text is empty");
+    return null;
+  }
+
+  try {
+    // Decode the Base64-encoded text to get the ciphertext
+    const decodedCipherText = CryptoJS.enc.Base64.parse(text).toString(
+      CryptoJS.enc.Utf8
+    );
+
+    // Decrypt the ciphertext
+    const bytes = CryptoJS.AES.decrypt(decodedCipherText, secretKey);
+
+    // Convert the decrypted bytes to a UTF-8 string
+    const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
+
+    // Check if decrypted text is empty
+    if (!decryptedText) {
+      console.error("Decrypted text is empty or invalid");
+      return null;
+    }
+
+    // Parse the decrypted text as JSON
+    return JSON.parse(decryptedText);
+  } catch (error) {
+    console.error("Decryption failed:", error);
+    return null; // Handle the error as needed
+  }
 }

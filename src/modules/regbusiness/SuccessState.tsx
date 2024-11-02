@@ -32,7 +32,7 @@ const SuccessState = ({ formStep }: Props) => {
         <div className="flex w-full border-t border-gray-300 mt-5">
           <div className="mt-4 flex w-full justify-end">
             <Link
-              href="/auth/signin"
+              href="/admin.dashboard"
               type="submit"
               className="flex items-center text-white bg-indigo-700 px-5 py-2 font-semibold rounded-md text-sm hover:bg-indigo-800 shadow-sm"
             >

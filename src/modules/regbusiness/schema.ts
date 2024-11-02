@@ -14,5 +14,6 @@ export const formStoreSchema = yup.object().shape({
   store_name: yup.string().required("Nama Toko Wajib diisi"),
   address: yup.string().required("Alamat Wajib diisi"),
   phone: yup.string().required("Nomer telepon wajib diisi"),
+  bank_type: yup.string().required("Jenis bank wajib diisi"),
   bank_tf: yup.string().required("Nomer Rekening Wajib diisi"),
 });

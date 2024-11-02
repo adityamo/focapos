@@ -2,37 +2,47 @@
 import { StoreValue } from "@/interface/business";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { formStoreSchema } from "./schema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import InputText from "@/components/inputs/InputText";
 import InputNum from "@/components/inputs/InputNum";
 import InputTextArea from "@/components/inputs/InputTextArea";
+import InputSelect from "@/components/inputs/InputSelect";
 import { useFormData } from "@/components/formsteps/FormContext";
+import { RegisterStoreSchema } from "@/entities/regbusiness";
 
 interface Props {
   formStep: any;
   prevFormStep: any;
   onSubmit: any;
   isLoading: boolean;
+  typeBank: [];
 }
 
-const FormStore = ({ prevFormStep, onSubmit, isLoading, formStep }: Props) => {
+const FormStore = ({
+  prevFormStep,
+  onSubmit,
+  isLoading,
+  formStep,
+  typeBank,
+}: Props) => {
   const { data } = useFormData();
   const { setFormValues } = useFormData();
   const { handleSubmit, control } = useForm<StoreValue>({
     mode: "all",
-    resolver: yupResolver(formStoreSchema),
+    resolver: zodResolver(RegisterStoreSchema),
     defaultValues: {
       store_name: "",
       address: "",
       phone: "",
+      bank_type: "",
       bank_tf: "",
     },
   });
 
   const nextSubmit = (values: any) => {
     setFormValues(values);
-    onSubmit(data);
+    const sendData = { ...data, ...values };
+    onSubmit(sendData);
   };
 
   return (
@@ -59,6 +69,13 @@ const FormStore = ({ prevFormStep, onSubmit, isLoading, formStep }: Props) => {
               control={control}
               minLength={8}
               maxLength={13}
+            />
+            <InputSelect
+              label="Bank"
+              name="bank_type"
+              placeholder="Pilih Bank"
+              options={typeBank}
+              control={control}
             />
             <InputText
               name="bank_tf"

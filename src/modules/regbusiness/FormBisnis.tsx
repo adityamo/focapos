@@ -4,9 +4,9 @@ import InputSelect from "@/components/inputs/InputSelect";
 import InputText from "@/components/inputs/InputText";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { formBisnisSchema } from "./schema";
 import { BusinessValue } from "@/interface/business";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { RegisterCompanySchema } from "@/entities/regbusiness";
 
 interface Props {
   formStep: any;
@@ -40,7 +40,7 @@ const FormBisnis = ({ formStep, nextFormStep, typeBusiness }: Props) => {
     setValue,
   } = useForm<BusinessValue>({
     mode: "all",
-    resolver: yupResolver(formBisnisSchema),
+    resolver: zodResolver(RegisterCompanySchema),
     defaultValues: {
       company_name: "",
       company_owner: "",

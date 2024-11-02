@@ -1,5 +1,5 @@
 import { authRouter } from "./routers/auth";
-import { registerBusiness } from "./routers/regcompany";
+import { registerBusiness } from "./routers/regbusiness";
 import { createTRPCRouter } from "@/server/api/trpc";
 
 /**
