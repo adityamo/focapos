@@ -65,6 +65,21 @@ const SignInModule: ForwardRefRenderFunction<SignInFormRefType, Props> = (
             Silahkan masuk dengan akun aplikasi anda
           </p>
         </div>
+        {errorMsg && (
+          <div className="mt-4">
+            <div
+              className="mt-2 bg-red-100 border border-red-200 text-sm text-red-800 rounded-lg p-4 dark:bg-red-800/10 dark:border-red-900 dark:text-red-500"
+              role="alert"
+              tabIndex={-1}
+              aria-labelledby="hs-soft-color-danger-label"
+            >
+              <span id="hs-soft-color-danger-label" className="font-bold">
+                Gagal
+              </span>{" "}
+              {errorMsg}
+            </div>
+          </div>
+        )}
         {/* 
         <div className="mt-5 flex w-full">
           <button
@@ -101,7 +116,7 @@ const SignInModule: ForwardRefRenderFunction<SignInFormRefType, Props> = (
         <div className="py-5 flex items-center text-xs text-gray-400 uppercase before:flex-1 before:border-t before:border-gray-200 before:me-6 after:flex-1 after:border-t after:border-gray-200 after:ms-6 dark:text-neutral-500 dark:before:border-neutral-600 dark:after:border-neutral-600">
           Atau
         </div> */}
-        <form className="py-5 lg:py-10" onSubmit={handleSubmit(onSubmit)}>
+        <form className="py-5 lg:py-5" onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-y-4">
             <InputText
               name="email"

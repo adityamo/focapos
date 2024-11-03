@@ -4,12 +4,13 @@ import InputSelect from "@/components/inputs/InputSelect";
 import InputText from "@/components/inputs/InputText";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { formBisnisSchema } from "./schema";
+import { BusinessValue } from "@/interface/business";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { RegisterCompanySchema } from "@/entities/regbusiness";
 
 interface Props {
   formStep: any;
-  nextFormStep: any;
+  nextFormStep: () => void;
   typeBusiness: any;
 }
 
@@ -37,9 +38,9 @@ const FormBisnis = ({ formStep, nextFormStep, typeBusiness }: Props) => {
     register,
     formState: { errors },
     setValue,
-  } = useForm({
+  } = useForm<BusinessValue>({
     mode: "all",
-    resolver: yupResolver(formBisnisSchema),
+    resolver: zodResolver(RegisterCompanySchema),
     defaultValues: {
       company_name: "",
       company_owner: "",
@@ -130,7 +131,7 @@ const FormBisnis = ({ formStep, nextFormStep, typeBusiness }: Props) => {
               control={control}
             />
             <InputText
-              name="company_name"
+              name="company_owner"
               label="Nama Pemilik Usaha"
               placeholder="Silahkan masukan nama Pemilik"
               control={control}
@@ -284,7 +285,7 @@ const FormBisnis = ({ formStep, nextFormStep, typeBusiness }: Props) => {
                     name="district"
                     onChange={(e: any) => {
                       setSelectedDistrict(e.target.value);
-                      setValue("city_code", e.target.value);
+                      setValue("district_code", e.target.value);
                     }}
                     value={selectedDistrict}
                     className={`py-3 px-3 pe-9 block w-full ${errors.district_code ? "border-red-500" : "border-gray-200"} rounded-lg text-sm border focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600`}

@@ -40,7 +40,7 @@ export default async function RootLayout({ children }: Props) {
       </head>
       <body className={`${fontSans.className}`}>
         <NextTopLoader
-          color="#312e81"
+          color="#84cc16"
           initialPosition={0.08}
           crawlSpeed={200}
           height={3}

@@ -42,7 +42,7 @@ function InputSelect({
             id={name}
             name={name}
             onChange={handleChange}
-            value={value}
+            value={value ?? ""}
             ref={ref}
             onBlur={onBlur}
             className={`py-3 px-3 pe-9 block w-full ${invalid ? "border-red-500" : "border-gray-200"} rounded-lg text-sm border focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600`}

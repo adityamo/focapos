@@ -8,6 +8,7 @@ import { signOut, useSession } from "next-auth/react";
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { data: session }: any = useSession();
+  console.log(session);
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
       <Link
@@ -17,7 +18,7 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            {session.user.name}
+            {session?.user?.name}
           </span>
           {/* <span className="block text-xs dark:text-white">UX Designer</span> */}
         </span>

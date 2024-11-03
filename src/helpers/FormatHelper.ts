@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const dropdownFormat = (data: any) => {
   const transformedArray = data.map((item: any) => ({
     code: item.id,
@@ -5,4 +7,9 @@ export const dropdownFormat = (data: any) => {
   }));
 
   return transformedArray;
+};
+
+export const getDateTimeNow = () => {
+  const dateNow = moment().format();
+  return dateNow;
 };
