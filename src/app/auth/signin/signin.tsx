@@ -18,18 +18,17 @@ const SignInPage = () => {
   const { data: session }: any = useSession();
   const router = useRouter();
 
-  const { data: companyStatus, refetch } =
-    api.regcompany.checkHaveCompany.useQuery(
-      { email },
-      {
-        enabled: false, // Agar query hanya dijalankan secara manual
-      }
-    );
+  const { refetch } = api.regcompany.checkHaveCompany.useQuery(
+    { email },
+    {
+      enabled: false,
+    }
+  );
 
   const handleSigIn: SubmitHandler<UserLogin> = async (values) => {
     setLoading(true);
     setErrMsg("");
-
+    setEmail(values.email);
     const res = await signIn("credentials", {
       email: values.email,
       password: values.password,
@@ -41,13 +40,12 @@ const SignInPage = () => {
     } else if (res?.ok) {
       setErrMsg("");
       setLoading(false);
-      setEmail(values.email);
 
       // const haveCompany = session?.user?.companyId ? true : false;
-      checkCompany();
-      const userID = encryptID(session?.user?.id);
+      const refetchResult = await refetch();
+      const companyStatus = refetchResult.data;
 
-      // const userID = session?.user?.id;
+      const userID = encryptID(session?.user?.id);
 
       if (companyStatus) {
         router.push("/admin/dashboard");
@@ -57,12 +55,6 @@ const SignInPage = () => {
     }
 
     setLoading(false);
-  };
-
-  const checkCompany = () => {
-    if (email) {
-      refetch();
-    }
   };
 
   return (

@@ -4,6 +4,7 @@ import { prisma } from "@/server/db";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { User as UserModel } from "@prisma/client";
+import { encryptID } from "@/helpers/EncryptHelper";
 
 declare module "next-auth" {
   // eslint-disable-next-line no-unused-vars
@@ -67,17 +68,17 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.username = token.name;
       }
 
       return token;
     },
     async session({ session, token, user }: any) {
-      const dbUser = await prisma.user.findUnique({
-        where: { email: token.email },
-      });
-      session.user.id = token.id;
-      session.user.companyId = dbUser?.company_id;
-      session.user.storeId = dbUser?.store_id;
+      // const dbUser = await prisma.user.findUnique({
+      //   where: { email: token.email },
+      // });
+      session.user.id = encryptID(token.id);
+      session.user.name = token.username;
       return session;
     },
   },
