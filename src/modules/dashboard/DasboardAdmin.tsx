@@ -1,17 +1,22 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import { IoMdArrowRoundUp, IoMdArrowRoundDown } from "react-icons/io";
 import { BsBox } from "react-icons/bs";
 import { LuUsers } from "react-icons/lu";
 import { FiShoppingCart } from "react-icons/fi";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const DashboardAdmin = () => {
+  const { user } = useSelector((state: RootState) => state.User);
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
       <div className="bg-gradient-to-r from-indigo-700 to-indigo-800 p-7 flex justify-between items-center rounded-lg w-full">
         <div className="space-y-1">
           <h3 className="text-white font-medium text-xl">
-            Halo, Aditya Septama
+            Halo, {user?.name || ""}
           </h3>
           <p className="text-sm text-white font-light">
             Rekap Penjualan anda hari ini

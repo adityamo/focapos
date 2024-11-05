@@ -4,11 +4,14 @@ import Link from "next/link";
 import Image from "next/image";
 import ClickOutside from "@/components/clickoutside";
 import { signOut, useSession } from "next-auth/react";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/store/reducers/UserDataSlice";
 
 const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { data: session }: any = useSession();
-  console.log(session);
+  const dispatch = useDispatch();
+
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
       <Link
@@ -135,6 +138,7 @@ const DropdownUser = () => {
             className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
             onClick={() => {
               signOut({ callbackUrl: "/auth/signin", redirect: true });
+              dispatch(setUser(null));
             }}
           >
             <svg
