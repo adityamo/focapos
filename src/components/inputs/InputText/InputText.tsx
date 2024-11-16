@@ -40,7 +40,7 @@ function InputText({
     <div className="space-y-4">
       <div>
         {label && (
-          <label className="block text-xs lg:text-sm text-slate-700 font-medium mb-2 dark:text-white">
+          <label className="block text-xs lg:text-[13px] text-slate-700 font-medium mb-2 dark:text-white">
             {label}
           </label>
         )}
@@ -57,7 +57,7 @@ function InputText({
             disabled={readOnly}
             autoComplete={autoComplete}
             type="text"
-            className={`py-3 px-4 block w-full border ${invalid ? "border-red-500" : "border-gray-200"}  rounded-lg text-xs lg:text-sm  focus:outline-none focus:ring focus:border-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600`}
+            className={`py-3 px-4 block w-full border ${invalid ? "border-red-500" : "border-gray-200"}  rounded-lg text-xs lg:text-[13px]  focus:outline-none focus:ring focus:border-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600`}
           />
           {invalid ? (
             <div className="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">

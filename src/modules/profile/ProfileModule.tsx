@@ -2,9 +2,16 @@
 import React, { useState } from "react";
 import { FiUser, FiBell, FiLock, FiUsers } from "react-icons/fi";
 import { CiCreditCard1 } from "react-icons/ci";
+import Account from "./Account";
+import Notification from "./Notification";
+import Security from "./Security";
+import Billing from "./Billing";
+import { RootState } from "@/store/store";
+import { useSelector } from "react-redux";
 
 const ProfileModule = () => {
   const [currentTab, setCurrentTab] = useState("STT001");
+  const { user } = useSelector((state: RootState) => state.User);
 
   const handleChangeTab = (tabId: string) => {
     setCurrentTab(tabId);
@@ -26,22 +33,36 @@ const ProfileModule = () => {
       child: [
         {
           childID: "STT004",
-          name: "Penagihan & Perencanaan",
+          name: "Pembayaran",
           icon: CiCreditCard1,
         },
         { childID: "STT005", name: "Tim", icon: FiUsers },
       ],
     },
   ];
+
+  const displayContent = (id: string) => {
+    switch (id) {
+      case "STT001":
+        return <Account user={user} />;
+      case "STT002":
+        return <Notification />;
+      case "STT003":
+        return <Security />;
+      case "STT004":
+        return <Billing />;
+    }
+  };
+
   return (
-    <div className="max-w-6xl px-0 py-5 sm:px-6 lg:px-8 lg:py-5 mx-auto space-y-5">
+    <div className="max-w-full px-0 py-5 sm:px-6 lg:px-8 lg:py-5 mx-auto space-y-5">
       <div className="flex flex-row w-full">
         <h3 className="text-slate-700 text-lg lg:text-2xl font-semibold">
           Pengaturan Akun
         </h3>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        <div className="lg:col-span-4">
+        <div className="lg:col-span-3">
           <div className="bg-white shadow-sm rounded-md border border-gray-200">
             <div className="p-4">
               {tablist.map((section: any, key: React.Key) => {
@@ -74,11 +95,7 @@ const ProfileModule = () => {
             </div>
           </div>
         </div>
-        <div className="lg:col-span-8">
-          <div className="bg-white shadow-sm rounded-md border border-gray-200">
-            <div className="p-5"></div>
-          </div>
-        </div>
+        <div className="lg:col-span-9">{displayContent(currentTab)}</div>
       </div>
     </div>
   );

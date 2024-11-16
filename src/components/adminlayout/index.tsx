@@ -58,7 +58,7 @@ const AdminPageLayout = ({ children }: Props) => {
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
         />
-        <main className="dark:bg-boxdark-2 bg-[#EEF2FF] dark:text-bodydark h-screen">
+        <main className="dark:bg-boxdark-2 bg-[#EEF2FF] dark:text-bodydark min-h-screen h-full">
           <div className="mx-auto  max-w-screen-2xl p-4 md:p-6 2xl:py-8  2xl:px-10 ">
             <Breadcrumb />
             {children}
