@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -22,11 +22,18 @@ const menuGroups = MenuData;
 const Sidebar = ({ sidebarOpen, setSidebarOpen, user }: SidebarProps) => {
   // const pathname = usePathname();
   const [pageName, setPageName] = useLocalStorage("selectedMenu", "dashboard");
+  const [storeName, setStoreName] = useState("");
+
+  useEffect(() => {
+    if (user) {
+      setStoreName(user.store_name);
+    }
+  }, []);
 
   return (
     <ClickOutside onClick={() => setSidebarOpen(false)}>
       <aside
-        className={`fixed left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-gradient-to-b from-[#4136C5] to-[#221D68] duration-300 ease-linear dark:bg-slate-900 lg:translate-x-0 ${
+        className={`fixed left-0 top-0 z-50 flex h-screen w-72.5 flex-col overflow-y-hidden bg-gradient-to-b from-[#4136C5] to-[#221D68] duration-300 ease-linear dark:bg-slate-900 lg:translate-x-0 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
@@ -66,11 +73,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, user }: SidebarProps) => {
         <div className="flex flex-col px-4 py-5 lg:px-6 lg:ml-4">
           <div className="flex flex-row items-center text-white">
             <FiCodesandbox className="me-4 h-8 w-8" />
-            <div>
+
+            <div className="flex flex-col">
               <p className="text-xs font-normal ">Outlet</p>
-              <h4 className="text-sm font-semibold">
-                {user?.store_name || ""}
-              </h4>
+              {storeName && (
+                <h5 className="text-sm font-semibold">
+                  {user?.store_name || ""}
+                </h5>
+              )}
             </div>
           </div>
         </div>

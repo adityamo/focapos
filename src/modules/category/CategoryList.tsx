@@ -2,6 +2,7 @@
 import CategoryTable from "@/components/table/CategoryTable";
 import React from "react";
 import { FiPlus } from "react-icons/fi";
+import Link from "next/link";
 
 const CategoryList = () => {
   return (
@@ -12,12 +13,15 @@ const CategoryList = () => {
             Kategori
           </h4>
           <div>
-            <button className="inline-flex items-center  bg-indigo-700 px-5 py-2 rounded-md text-white text-xs lg:text-sm">
+            <Link
+              href={"/admin/product/category/add"}
+              className="inline-flex items-center  bg-indigo-700 px-5 py-2 rounded-md text-white text-xs lg:text-sm"
+            >
               <span className="me-2">
                 <FiPlus />
               </span>
               Tambah
-            </button>
+            </Link>
           </div>
         </div>
       </div>

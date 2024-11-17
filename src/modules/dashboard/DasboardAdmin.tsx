@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { IoMdArrowRoundUp, IoMdArrowRoundDown } from "react-icons/io";
 import { BsBox } from "react-icons/bs";
@@ -10,14 +10,22 @@ import { RootState } from "@/store/store";
 
 const DashboardAdmin = () => {
   const { user } = useSelector((state: RootState) => state.User);
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    if (user) {
+      setUsername(user.name);
+    }
+  }, []);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
       <div className="bg-gradient-to-r from-indigo-700 to-indigo-800 p-7 flex justify-between items-center rounded-lg w-full">
         <div className="space-y-1">
-          <h3 className="text-white font-medium text-xl">
-            Halo, {user?.name || ""}
-          </h3>
+          {username && (
+            <h3 className="text-white font-medium text-xl">Halo, {username}</h3>
+          )}
+
           <p className="text-sm text-white font-light">
             Rekap Penjualan anda hari ini
           </p>

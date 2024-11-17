@@ -24,7 +24,7 @@ export const RegisterCompanySchema = z.object({
       required_error: "Waktu beroperasinal harus diisi",
       invalid_type_error: "Waktu beroperasinal Tidak Valid",
     })
-    .min(1, { message: " Waktu beroperasinal Wajib diisi" }),
+    .min(1, { message: "Waktu beroperasinal Wajib diisi" }),
   province_code: z
     .string({
       required_error: "Provinsi harus diisi",

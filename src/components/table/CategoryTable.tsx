@@ -9,20 +9,16 @@ const CategoryTable = () => {
 
   const columns: ReadonlyArray<Column> = [
     {
-      Header: "Job title",
-      accessor: "title",
+      Header: "Kode Kategori",
+      accessor: "code",
     },
     {
-      Header: "Departement",
-      accessor: "department",
+      Header: "Name Kategori",
+      accessor: "name",
     },
     {
-      Header: "Candidate",
-      accessor: "candidate",
-    },
-    {
-      Header: "Expired Dat",
-      accessor: "expiry_date",
+      Header: "Status",
+      accessor: "isActive",
     },
     {
       Header: () => {

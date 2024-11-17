@@ -16,7 +16,7 @@ export const authRouter = createTRPCRouter({
   getSecretMessage: protectedProcedure.query(() => {
     return "You can see this in server side";
   }),
-  getUserInfo: protectedProcedure
+  getUserInfo: publicProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ ctx, input }) => {
       const user = await ctx.prisma.user.findUnique({

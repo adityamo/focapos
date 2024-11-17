@@ -85,7 +85,7 @@ function InputNum({
         </div>
         {invalid ? (
           <p
-            className="text-sm text-red-600 mt-2"
+            className="text-xs text-red-600 mt-2"
             id="hs-validation-name-error-helper"
           >
             {error?.message}
