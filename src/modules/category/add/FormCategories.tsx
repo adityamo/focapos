@@ -33,7 +33,7 @@ const FormCategories: ForwardRefRenderFunction<FormCategoryRefType, Props> = (
 ) => {
   const [toggleIsActive, setToggleIsActive] = useState(true);
 
-  const { handleSubmit, control, setError, setValue } = useForm({
+  const { handleSubmit, control, setError, setValue, reset } = useForm({
     defaultValues: {
       code: "",
       name: "",
@@ -62,6 +62,7 @@ const FormCategories: ForwardRefRenderFunction<FormCategoryRefType, Props> = (
             name="code"
             placeholder="Masukan kode category"
             control={control}
+            maxLength={7}
           />
           <div className="flex flex-col space-y-1">
             <h5 className="text-slate-700 text-sm font-medium">Kategori</h5>
@@ -70,7 +71,7 @@ const FormCategories: ForwardRefRenderFunction<FormCategoryRefType, Props> = (
             </p>
           </div>
           <InputText
-            name="code"
+            name="name"
             placeholder="Masukan Nama Kategori"
             control={control}
           />
@@ -88,7 +89,7 @@ const FormCategories: ForwardRefRenderFunction<FormCategoryRefType, Props> = (
                   className="sr-only peer"
                 />
                 <div className="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300 dark:peer-focus:ring-indigo-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-indigo-600"></div>
-                <span className="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">
+                <span className="ms-3 text-xs font-medium text-gray-900 dark:text-gray-300">
                   Status Kategori
                 </span>
               </label>
@@ -96,7 +97,12 @@ const FormCategories: ForwardRefRenderFunction<FormCategoryRefType, Props> = (
           </div>
         </div>
         <div className="flex w-full justify-end pt-4 border-t border-gray-200">
-          <button className="me-3 px-5 py-2 bg-white text-red-500 border border-red-500 rounded-md text-sm font-semibold hover:bg-red-500 hover:text-white">
+          <button
+            onClick={() => {
+              reset();
+            }}
+            className="me-3 px-5 py-2 bg-white text-red-500 border border-red-500 rounded-md text-sm font-semibold hover:bg-red-500 hover:text-white"
+          >
             Cancel
           </button>
           <button

@@ -3,17 +3,37 @@ import React, { useRef, useState } from "react";
 import FormCategories, {
   FormCategoryRefType,
 } from "@/modules/category/add/FormCategories";
+import { RootState } from "@/store/store";
+import { useSelector } from "react-redux";
+import { api } from "@/utils/api";
 
 const AddCategory = () => {
   const ref = useRef<FormCategoryRefType>(null);
   const [loading, setLoading] = useState(false);
+  const { user } = useSelector((state: RootState) => state.User);
+  const { mutate: postCategory } =
+    api.category.createProductCategory.useMutation();
 
   const onSubmit = async (values: any) => {
     setLoading(true);
+    const sendData: any = {
+      code: values.code,
+      name: values.name,
+      isActive: values.isActive,
+      store_id: user.store_id,
+      createdBy: user.id,
+      updatedBy: 0,
+    };
+
+    postCategory(sendData, {
+      onSuccess: (resp: any) => {
+        console.log(resp);
+      },
+    });
   };
 
   return (
-    <div className="max-w-full justify-center px-0 py-5 sm:px-6 lg:px-8 lg:py-5 mx-auto space-y-5">
+    <div className="max-w-3xl justify-center px-0 py-5 sm:px-6 lg:px-8 lg:py-5 mx-auto space-y-5">
       <div className="relative space-y-1">
         <h3 className="text-slate-700 text-sm lg:text-lg font-semibold">
           Tambah Category

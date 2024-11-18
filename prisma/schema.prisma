@@ -113,6 +113,7 @@ model M003_Store {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   user          User[]
+  M2001_ProductCategories M2001_ProductCategories[]
 }
 
 model M1002_DataBank {
@@ -130,12 +131,13 @@ model M2001_ProductCategories {
   id        Int       @id @default(autoincrement())
   code      String    
   name      String
-  store_id  String
+  store_id  Int
   isActive  Boolean?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  createdBy String?   
-  updatedBy String?    
+  createdBy Int?   
+  updatedBy Int?  
+  M003_Store M003_Store? @relation(fields: [store_id], references: [id])
 }
 
 

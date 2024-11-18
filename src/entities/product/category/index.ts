@@ -14,4 +14,7 @@ export const CategorySchema = z.object({
   isActive: z.boolean({
     required_error: "Status Harus dipilih",
   }),
+  store_id: z.number().optional(),
+  createdBy: z.number().optional(),
+  updatedBy: z.number().optional(),
 });

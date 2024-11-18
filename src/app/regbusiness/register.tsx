@@ -20,7 +20,7 @@ const RegisterBusiness = ({ ddlData, steps, idCustomer }: Props) => {
   const [formStep, setFormStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const { mutate: registerBusiness } =
-    api.regcompany.resisterBusiness.useMutation();
+    api.regcompany.registerBusiness.useMutation();
 
   const nextFormStep = () => {
     setFormStep((currentStep) => currentStep + 1);
