@@ -35,7 +35,7 @@ export const registerBusiness = createTRPCRouter({
         hasCompany,
       };
     }),
-  resisterBusiness: publicProcedure
+  registerBusiness: publicProcedure
     .input((input) => input)
     .mutation(async ({ input }: any) => {
       const { company, store } = input;

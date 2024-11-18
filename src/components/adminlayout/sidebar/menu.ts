@@ -11,7 +11,7 @@ export const menuItem = [
         route: "",
         children: [
           { label: "Daftar Category", route: "/admin/product/category" },
-          { label: "Daftar Product", route: "/admin/product/product" },
+          { label: "Daftar Produk", route: "/admin/product/product" },
           { label: "Daftar Layanan", route: "/admin/product/services" },
           { label: "Daftar Additional", route: "/admin/product/additional" },
           { label: "Daftar Ongkos Kirim", route: "/admin/product/delivery" },

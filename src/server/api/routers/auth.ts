@@ -16,7 +16,7 @@ export const authRouter = createTRPCRouter({
   getSecretMessage: protectedProcedure.query(() => {
     return "You can see this in server side";
   }),
-  getUserInfo: protectedProcedure
+  getUserInfo: publicProcedure
     .input(z.object({ id: z.number() }))
     .query(async ({ ctx, input }) => {
       const user = await ctx.prisma.user.findUnique({
@@ -26,6 +26,7 @@ export const authRouter = createTRPCRouter({
         include: {
           M001_Company: true, // Asumsikan terdapat relasi 'company' di model Prisma
           M003_Store: true,
+          M1001_Roles: true,
         },
       });
 
@@ -33,7 +34,18 @@ export const authRouter = createTRPCRouter({
         throw new Error("User not found");
       }
 
-      return user;
+      const finalResult = {
+        id: user.id,
+        name: user.name,
+        company_id: user.M001_Company?.id || null,
+        company_name: user.M001_Company?.company_name || null,
+        store_id: user.M003_Store?.id || null,
+        store_name: user.M003_Store?.store_name || null,
+        roles_id: user.M1001_Roles?.id || null,
+        roles_name: user.M1001_Roles?.roles_name || null,
+      };
+
+      return finalResult;
     }),
   registerUser: publicProcedure
     .input(RegisterSchema)
