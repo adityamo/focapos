@@ -11,8 +11,8 @@ export const categoryController = createTRPCRouter({
         name: input.name,
         isActive: input.isActive,
         store_id: input.store_id, // Ensure this is provided
-        createdBy: input.createdBy?.toString(),
-        updatedBy: input.updatedBy?.toString(),
+        createdBy: input.createdBy,
+        updatedBy: input.updatedBy,
       };
 
       const createData = await ctx.prisma.m2001_ProductCategories.create({

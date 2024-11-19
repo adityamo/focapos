@@ -6,10 +6,13 @@ import FormCategories, {
 import { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
 import { api } from "@/utils/api";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 const AddCategory = () => {
   const ref = useRef<FormCategoryRefType>(null);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const { user } = useSelector((state: RootState) => state.User);
   const { mutate: postCategory } =
     api.category.createProductCategory.useMutation();
@@ -27,7 +30,13 @@ const AddCategory = () => {
 
     postCategory(sendData, {
       onSuccess: (resp: any) => {
-        console.log(resp);
+        setLoading(false);
+        toast.success("Kategori Berhasil Dibuat");
+        router.push("/admin/product/category");
+      },
+      onError: () => {
+        toast.error("Gagal membuat kategori");
+        setLoading(false);
       },
     });
   };
