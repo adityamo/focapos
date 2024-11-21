@@ -21,14 +21,14 @@ export const Pagination: FC<TPagination> = (props): ReactElement => {
   }
 
   return (
-    <div className="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-neutral-700">
+    <div className="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center">
       <div className="max-w-sm space-y-3">
         <select
           value={perPage}
           onChange={(e) => {
-            setPerPage(Number(e));
+            setPerPage(Number(e.target.value));
           }}
-          className="py-2 px-3 pe-9 block border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400"
+          className="py-2 px-3 pe-9 block border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400"
         >
           {[5, 10, 20, 30].map((pageSize) => (
             <option key={pageSize} value={pageSize}>

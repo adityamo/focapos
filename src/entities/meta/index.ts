@@ -9,7 +9,7 @@ export type TMetaItem = {
   prevPage: number | null;
 };
 
-export const VSMetaRequesyt = z
+export const VSMetaRequest = z
   .object({
     search: z.string(),
     page: z.number(),

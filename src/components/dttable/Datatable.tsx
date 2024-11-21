@@ -34,7 +34,7 @@ const DataTableController = <T extends Record<string, unknown>>(
 
   return (
     <div className={className}>
-      {props.isLoading && (
+      {/* {props.isLoading && (
         <div
           role="status"
           className="absolute bottom-[30px] right-1/2 flex items-center flex-col"
@@ -55,10 +55,14 @@ const DataTableController = <T extends Record<string, unknown>>(
             />
           </svg>
         </div>
-      )}
+      )} */}
       <Table {...props}>
         <TableHead tableHead={table.getHeaderGroups()} />
-        {!props.isLoading && <TableBody tableBody={table.getRowModel()} />}
+        <TableBody
+          tableBody={table.getRowModel()}
+          loading={props.isLoading ?? false}
+          columnLength={props.columns.length}
+        />
       </Table>
     </div>
   );

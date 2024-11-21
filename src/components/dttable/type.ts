@@ -1,4 +1,4 @@
-import { TMetaItem } from "@/entities/meta";
+import { TMetaItem, TMetaResponse } from "@/entities/meta";
 import { HeaderGroup } from "@tanstack/react-table";
 import { ColumnDef } from "@tanstack/react-table";
 import { RowModel } from "@tanstack/react-table";
@@ -40,4 +40,17 @@ export type TPagination = {
 export type TSearch = {
   placeholder?: string;
   handleSearch?: ChangeEventHandler<HTMLInputElement>;
+};
+
+export const metaResponsePrefix = <T>({
+  data,
+  meta,
+}: {
+  data: T;
+  meta: TMetaItem;
+}): TMetaResponse<T> => {
+  return {
+    data,
+    meta,
+  };
 };

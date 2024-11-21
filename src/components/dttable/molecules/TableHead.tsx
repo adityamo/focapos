@@ -12,7 +12,7 @@ export const TableHead = <T extends Record<string, unknown>>(
         <tr key={headerGroup.id}>
           {headerGroup.headers.map((header) => (
             <th
-              className="font-semibold uppercase tracking-wide text-gray-800 text-xs p-2 text-left w-fit select-none"
+              className="font-semibold p-4 uppercase tracking-wide text-gray-800 text-xs  text-left w-fit select-none"
               key={header.id}
             >
               <div

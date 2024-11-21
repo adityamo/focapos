@@ -22,7 +22,7 @@ export const SearchBox: FC<TSearch> = (props): ReactElement => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <>
+    <div className="px-4 py-4">
       <label className="sr-only">Search</label>
       <div className="relative">
         <input
@@ -55,6 +55,6 @@ export const SearchBox: FC<TSearch> = (props): ReactElement => {
           </svg>
         </div>
       </div>
-    </>
+    </div>
   );
 };
