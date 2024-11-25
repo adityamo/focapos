@@ -7,12 +7,12 @@ export const TableHead = <T extends Record<string, unknown>>(
   props: TTableHead<T>
 ): ReactElement => {
   return (
-    <thead className="bg-gray-50 p-2 w-fit h-auto">
+    <thead className="bg-indigo-50 p-2 w-fit h-auto">
       {props.tableHead.map((headerGroup) => (
         <tr key={headerGroup.id}>
           {headerGroup.headers.map((header) => (
             <th
-              className="font-semibold p-4 uppercase tracking-wide text-gray-800 text-xs  text-left w-fit select-none"
+              className="font-semibold p-4  tracking-wide text-indigo-800 text-xs  text-left w-fit select-none"
               key={header.id}
             >
               <div

@@ -9,7 +9,13 @@ import { api } from "@/utils/api";
 import { ColumnDef } from "@tanstack/react-table";
 import { format } from "date-fns";
 import Badge from "../badge";
-import { AiFillDelete } from "react-icons/ai";
+import { FiTrash, FiEdit2 } from "react-icons/fi";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
+import Link from "next/link";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 const CategoryTable = () => {
   const [search, setSearch] = useQueryState(
@@ -18,25 +24,57 @@ const CategoryTable = () => {
   );
   const [page] = useQueryState("page", parseAsInteger.withDefault(1));
   const [perPage] = useQueryState("perPage", parseAsInteger.withDefault(5));
+  const { user } = useSelector((state: RootState) => state.User);
 
   const {
     data: category,
     isLoading,
-    // refetch,
+    refetch,
   } = api.category.getProductCategory.useQuery({
     search,
     page,
     perPage,
-    store_id: 1,
+    store_id: user?.store_id,
   });
 
   const data = category?.data;
 
   type Unpacked<T> = T extends (infer U)[] ? U : T;
   type TData = NonNullable<typeof data>;
+  const MySwal = withReactContent(Swal);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
+  };
+
+  const { mutate: deleteCategories } =
+    api.category.deleteProductCategory.useMutation();
+
+  const handleDelete = (categoriesID: any) => {
+    MySwal.fire({
+      title: (
+        <h3 className="text-xl font-semibold text-slate-700">
+          Apakah anda yakin untuk menghapus?
+        </h3>
+      ),
+      showCancelButton: true,
+      confirmButtonText: "Ya, Hapus",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        deleteCategories(
+          { id: parseInt(categoriesID) },
+          {
+            onSuccess: (resp: any) => {
+              toast.success("Kategori Berhasil dihapus");
+              refetch();
+            },
+            onError: () => {
+              toast.error("Gagal Menghapus");
+            },
+          }
+        );
+      }
+    });
   };
 
   const columns = useMemo<ColumnDef<Unpacked<TData>>[]>(
@@ -82,15 +120,33 @@ const CategoryTable = () => {
         },
       },
       {
+        header: "Terakhir diubah",
+        accessorKey: "updatedAt",
+        cell: ({ getValue }) => {
+          const value = new Date(getValue<Date>());
+          return format(value, "dd MMM yyyy, hh:ss");
+        },
+      },
+      {
         header: "Aksi",
         cell: ({ row }) => {
           return (
-            <div className="flex gap-x-2">
-              <a href="" className="">
-                <AiFillDelete />
-              </a>
-              <a href="" className="">
-                <AiFillDelete />
+            <div className="flex justify-start">
+              <Link
+                href={`/admin/product/category/${row.original.id}`}
+                className="py-2 px-3 inline-flex justify-center items-center gap-2 -ml-px first:rounded-l-lg first:ml-0 last:rounded-r-lg border font-medium bg-white text-gray-500 align-middle hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-2 focus:ring-indigo-600 transition-all text-sm "
+              >
+                <FiEdit2 />
+              </Link>
+              <a
+                href=""
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleDelete(row.original.id);
+                }}
+                className="py-2 px-3 inline-flex justify-center items-center gap-2 -ml-px first:rounded-l-lg first:ml-0 last:rounded-r-lg border font-medium bg-white text-gray-500 align-middle hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-2 focus:ring-indigo-600 transition-all text-sm "
+              >
+                <FiTrash />
               </a>
             </div>
           );

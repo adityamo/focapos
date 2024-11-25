@@ -3,6 +3,7 @@ import { createTRPCRouter } from "../../trpc";
 import { protectedProcedure } from "../../trpc";
 import { CategorySchema } from "@/entities/product/category";
 import { metaResponsePrefix } from "@/components/dttable/type";
+import { z } from "zod";
 
 export const categoryController = createTRPCRouter({
   getProductCategory: protectedProcedure
@@ -34,7 +35,7 @@ export const categoryController = createTRPCRouter({
           skip: input?.search ? 0 : offset, // Reset offset if search is applied
           take: perPage,
           orderBy: {
-            createdAt: "asc", // Order by createdAt in ascending order
+            createdAt: "desc", // Order by createdAt in ascending order
           },
         });
 
@@ -95,6 +96,81 @@ export const categoryController = createTRPCRouter({
       return {
         code: 200,
         message: "Success Submit",
+      };
+    }),
+  updateProductCategory: protectedProcedure
+    .input(
+      z.object({
+        id: z.number(),
+        code: z.string(),
+        name: z.string(),
+        isActive: z.boolean(),
+        updatedBy: z.number(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const updateData = await ctx.prisma.m2001_ProductCategories.update({
+        where: { id: input.id },
+        data: {
+          code: input.code,
+          name: input.name,
+          isActive: input.isActive,
+          updatedBy: input.updatedBy,
+        },
+      });
+
+      if (!updateData) {
+        return {
+          code: 500,
+          message: "Failed to submit",
+        };
+      }
+
+      return {
+        code: 200,
+        message: "Success Submit",
+      };
+    }),
+
+  deleteProductCategory: protectedProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      const { id } = input;
+      try {
+        await ctx.prisma.m2001_ProductCategories.delete({ where: { id: id } });
+        return {
+          code: 200,
+          message: "Success Deleted",
+        };
+      } catch (err) {
+        return {
+          code: 500,
+          message: "Failed to submit",
+        };
+      }
+    }),
+  getDetailProductCategory: protectedProcedure
+    .input(z.object({ id: z.number() }))
+    .query(async ({ ctx, input }) => {
+      const { id } = input;
+
+      const getDetail = await ctx.prisma.m2001_ProductCategories.findUnique({
+        where: {
+          id: id,
+        },
+      });
+
+      if (!getDetail) {
+        return {
+          code: 500,
+          message: "Failed to fetch",
+        };
+      }
+
+      return {
+        code: 200,
+        message: "Success fetch",
+        result: getDetail,
       };
     }),
 });

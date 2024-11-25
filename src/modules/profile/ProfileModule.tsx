@@ -6,12 +6,14 @@ import Account from "./Account";
 import Notification from "./Notification";
 import Security from "./Security";
 import Billing from "./Billing";
-import { RootState } from "@/store/store";
-import { useSelector } from "react-redux";
 
-const ProfileModule = () => {
+interface Props {
+  accountInfo: any;
+}
+
+const ProfileModule = ({ accountInfo }: Props) => {
   const [currentTab, setCurrentTab] = useState("STT001");
-  const { user } = useSelector((state: RootState) => state.User);
+  console.log(accountInfo);
 
   const handleChangeTab = (tabId: string) => {
     setCurrentTab(tabId);
@@ -44,7 +46,7 @@ const ProfileModule = () => {
   const displayContent = (id: string) => {
     switch (id) {
       case "STT001":
-        return <Account user={user} />;
+        return <Account user={accountInfo} />;
       case "STT002":
         return <Notification />;
       case "STT003":

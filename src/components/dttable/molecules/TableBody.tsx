@@ -12,7 +12,7 @@ export const TableBody = <T extends Record<string, unknown>>(
   return (
     <>
       {loading ? (
-        <tbody className="">
+        <tbody className="bg-white dark:bg-slate-800">
           <tr className="tr">
             <td colSpan={columnLength}>
               <div className="text-center justify-center p-5">

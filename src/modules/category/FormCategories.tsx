@@ -4,10 +4,12 @@ import { CategoryValues } from "@/interface/product/category";
 import React, {
   forwardRef,
   ForwardRefRenderFunction,
+  // useEffect,
   useImperativeHandle,
-  useState,
+  // useState,
 } from "react";
 import {
+  Controller,
   SubmitHandler,
   useForm,
   UseFormSetError,
@@ -15,6 +17,7 @@ import {
 } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CategorySchema } from "@/entities/product/category";
+import { useRouter } from "next/navigation";
 
 type Props = {
   defaultValues: any;
@@ -31,13 +34,14 @@ const FormCategories: ForwardRefRenderFunction<FormCategoryRefType, Props> = (
   { defaultValues, onSubmit, isLoading },
   ref
 ) => {
-  const [toggleIsActive, setToggleIsActive] = useState(true);
+  // const [toggleIsActive, setToggleIsActive] = useState(true);
+  const router = useRouter();
 
   const { handleSubmit, control, setError, setValue, reset } = useForm({
     defaultValues: {
       code: "",
       name: "",
-      isActive: true,
+      isActive: defaultValues?.isActive || false,
       ...defaultValues,
     },
     resolver: zodResolver(CategorySchema),
@@ -77,22 +81,24 @@ const FormCategories: ForwardRefRenderFunction<FormCategoryRefType, Props> = (
           />
           <div className="col-span-2">
             <div className="flex w-full">
-              <label className="inline-flex w-full justify-start items-center my-2 cursor-pointer ">
-                <input
-                  type="checkbox"
-                  value="showTypeOfWork"
-                  checked={toggleIsActive}
-                  onChange={() => {
-                    setToggleIsActive(!toggleIsActive);
-                    setValue("isActive", !toggleIsActive); // Update form value
-                  }}
-                  className="sr-only peer"
-                />
-                <div className="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300 dark:peer-focus:ring-indigo-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-indigo-600"></div>
-                <span className="ms-3 text-xs font-medium text-gray-900 dark:text-gray-300">
-                  Status Kategori
-                </span>
-              </label>
+              <Controller
+                name="isActive"
+                control={control}
+                render={({ field }) => (
+                  <label className="inline-flex w-full justify-start items-center my-2 cursor-pointer">
+                    <input
+                      type="checkbox"
+                      checked={field.value}
+                      onChange={(e) => field.onChange(e.target.checked)}
+                      className="sr-only peer"
+                    />
+                    <div className="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-indigo-300 dark:peer-focus:ring-indigo-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-indigo-600"></div>
+                    <span className="ms-3 text-xs font-medium text-gray-900 dark:text-gray-300">
+                      Status Kategori
+                    </span>
+                  </label>
+                )}
+              />
             </div>
           </div>
         </div>
@@ -100,7 +106,9 @@ const FormCategories: ForwardRefRenderFunction<FormCategoryRefType, Props> = (
           <button
             onClick={() => {
               reset();
+              router.push("/admin/product/category");
             }}
+            type="button"
             className="me-3 px-5 py-2 bg-white text-red-500 border border-red-500 rounded-md text-sm font-semibold hover:bg-red-500 hover:text-white"
           >
             Cancel
@@ -108,6 +116,7 @@ const FormCategories: ForwardRefRenderFunction<FormCategoryRefType, Props> = (
           <button
             type="submit"
             className="px-5 py-2 bg-indigo-700 text-white rounded-md text-sm font-semibold hover:bg-indigo-800"
+            disabled={isLoading}
           >
             {isLoading ? (
               <>
