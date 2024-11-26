@@ -6,24 +6,29 @@ export const ChangePasswordSchema = z
       .string({
         required_error: "password saat ini harus diisi",
       })
-      .min(6, { message: "Password Minimal 5 Karakter" }),
+      .min(5, { message: "Password Minimal 5 Karakter" }),
     new_password: z
       .string({
         required_error: "password baru harus diisi",
       })
-      .min(6, { message: "Password Minimal 5 Karakter" }),
-    confirm_passowrd: z
+      .min(5, { message: "Password Minimal 5 Karakter" }),
+    confirm_password: z
       .string({
         required_error: "ulangi password wajib disi",
       })
-      .min(6, { message: "Password Minimal 5 Karakter" }),
+      .min(5, { message: "Password Minimal 5 Karakter" }),
   })
-  .superRefine((val, ctx) => {
-    if (val.password !== val.confirm_passowrd) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        message: "Password tidak sesuai dengan password yang ingin anda ubah",
-        path: ["confirm_passowrd"],
-      });
-    }
+  .refine((data) => data.new_password === data.confirm_password, {
+    path: ["confirm_password"], // Specify the field causing the error
+    message: "Password baru dan ulangi password harus sama", // Error message
   });
+
+export const AccountInformationSchema = z.object({
+  name: z
+    .string({ required_error: "Nama Wajib diisi" })
+    .min(4, { message: "Nama minimmal 4 Karakter" }),
+  email: z
+    .string({ required_error: "Email wajib diisi" })
+    .min(4, { message: "Nama minimmal 4 Karakter" })
+    .email("Format Email tidak valid"),
+});

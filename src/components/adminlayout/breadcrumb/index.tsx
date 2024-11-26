@@ -10,7 +10,7 @@ const Breadcrumb = () => {
   // Start from the 3rd segment to skip 'en/admin'
 
   const breadcrumbItems = pathSegments.map((segment, index) => {
-    const path = `/admin/${pathSegments.slice(0, index + 1).join("/")}`;
+    const path = `/${pathSegments.slice(0, index + 1).join("/")}`;
     return { name: segment.charAt(0).toUpperCase() + segment.slice(1), path };
   });
 

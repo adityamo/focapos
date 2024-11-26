@@ -1,9 +1,16 @@
 import React from "react";
-import { NextPage } from "next";
 import ProfileModule from "@/modules/profile/ProfileModule";
+import { api } from "@/utils/server";
+import { notFound } from "next/navigation";
 
-const ProfilePage: NextPage = () => {
-  return <ProfileModule />;
+const ProfilePage = async () => {
+  const detailUser = await api.profile.getDetailProfile.query();
+
+  if (!detailUser) {
+    return notFound();
+  }
+
+  return <ProfileModule accountInfo={detailUser?.data} />;
 };
 
 export default ProfilePage;

@@ -25,7 +25,9 @@ const CategoryList = () => {
           </div>
         </div>
       </div>
-      <CategoryTable />
+      <div className="flex w-full">
+        <CategoryTable />
+      </div>
     </>
   );
 };
