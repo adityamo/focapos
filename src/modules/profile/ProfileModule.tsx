@@ -13,7 +13,6 @@ interface Props {
 
 const ProfileModule = ({ accountInfo }: Props) => {
   const [currentTab, setCurrentTab] = useState("STT001");
-  console.log(accountInfo);
 
   const handleChangeTab = (tabId: string) => {
     setCurrentTab(tabId);

@@ -8,14 +8,14 @@ import { AccountInformationSchema } from "@/entities";
 import InputText from "@/components/inputs/InputText";
 import { api } from "@/utils/api";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/store/reducers/UserDataSlice";
 
 interface Props {
   user: any;
 }
 
 const Account = ({ user }: Props) => {
-  // const [isModaOpen, setIsModalOpen] = useState(false);
-
   const [loading, setLoading] = useState(false);
   const { handleSubmit, control, reset } = useForm<AccountValues>({
     resolver: zodResolver(AccountInformationSchema),
@@ -27,6 +27,14 @@ const Account = ({ user }: Props) => {
   });
 
   const { mutate: changeAccount } = api.profile.changeAccount.useMutation();
+  const { refetch: refetchProfile } = api.auth.getUserInfo.useQuery(
+    {
+      id: user.id,
+    },
+    { enabled: false }
+  );
+
+  const dispatch = useDispatch();
 
   // const openModal = () => {
   //   setIsModalOpen(true);
@@ -45,10 +53,14 @@ const Account = ({ user }: Props) => {
     };
 
     changeAccount(sendData, {
-      onSuccess: () => {
+      onSuccess: async () => {
         setLoading(false);
         reset();
         toast.success("Berhasil update Akun");
+        const updateProfile = await refetchProfile();
+        if (updateProfile.status === "success") {
+          dispatch(setUser(updateProfile.data));
+        }
       },
       onError: () => {
         setLoading(false);

@@ -21,12 +21,22 @@ const DashboardAdmin = () => {
   return (
     <>
       <div className="relative pb-5 space-y-2">
-        <h3 className="text-slate-700 font-semibold text-2xl">
-          Selamat Datang, <span className="text-indigo-700">{username}</span>
-        </h3>
-        <p className="text-gray-500 font-medium text-sm">
-          Pantau selalu setiap kegiatan yang ada di tokomu
-        </p>
+        {username ? (
+          <>
+            <h3 className="text-slate-700 font-semibold text-2xl">
+              Selamat Datang,{" "}
+              <span className="text-indigo-700">{username}</span>
+            </h3>
+            <p className="text-gray-500 font-medium text-sm">
+              Pantau selalu setiap kegiatan yang ada di tokomu
+            </p>
+          </>
+        ) : (
+          <div className="animate-pulse flex flex-col w-full gap-2">
+            <div className="h-6 bg-gray-200 rounded w-2/3"></div>
+            <div className="mt-2 h-4 bg-gray-200 rounded w-1/3"></div>
+          </div>
+        )}
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
         <div className="bg-gradient-to-r from-indigo-700 to-indigo-800 p-7 flex justify-between items-center rounded-lg w-full">
