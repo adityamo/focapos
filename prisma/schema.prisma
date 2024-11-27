@@ -113,7 +113,9 @@ model M003_Store {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   user          User[]
+
   M2001_ProductCategories M2001_ProductCategories[]
+  M2002_Product  M2002_Product[]
 }
 
 model M1002_DataBank {
@@ -137,8 +139,72 @@ model M2001_ProductCategories {
   updatedAt DateTime  @updatedAt
   createdBy Int?   
   updatedBy Int?  
+
   M003_Store M003_Store? @relation(fields: [store_id], references: [id])
+  M2002_Product M2002_Product[]
 }
+
+model M2002_Product{
+  id            Int       @id @default(autoincrement())
+  store_id      Int
+  category_id   Int
+  productCode   String
+  productName   String
+  description   String?
+  isActive      Boolean?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  createdBy Int?   
+  updatedBy Int?
+
+  M003_Store              M003_Store? @relation(fields: [store_id], references: [id])
+  M2001_ProductCategories M2001_ProductCategories? @relation(fields: [category_id], references: [id])
+  M2003_ProductPrice      M2003_ProductPrice[]
+  M2004_ProductVariant    M2004_ProductVariant[]
+  M2005_ProductImage      M2005_ProductImage[]
+}
+
+
+model M2003_ProductPrice{
+  id            Int       @id @default(autoincrement())
+  product_id    Int   
+  qty1          Int
+  qty2          Int
+  unitPrice     Decimal
+  notes         String?
+  isActive      Boolean?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  createdBy     Int?   
+  updatedBy     Int?
+
+  M2002_Product M2002_Product? @relation(fields: [product_id], references: [id])
+}
+
+
+model M2004_ProductVariant{
+  id            Int       @id @default(autoincrement())
+  product_id    Int  
+  variantName   String    
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  createdBy     Int?   
+  updatedBy     Int?
+
+  M2002_Product M2002_Product? @relation(fields: [product_id], references: [id])
+}
+
+model M2005_ProductImage{
+  id            Int       @id @default(autoincrement())
+  product_id    Int
+  categoryImg   String
+  image_url     String
+
+  
+  M2002_Product M2002_Product? @relation(fields: [product_id], references: [id])
+}
+
+
 
 
 
