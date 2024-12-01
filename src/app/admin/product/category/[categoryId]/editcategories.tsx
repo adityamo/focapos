@@ -44,8 +44,6 @@ const Editcategories = ({ detail, id }: Props) => {
     });
   };
 
-  console.log(detail);
-
   return (
     <div className="max-w-3xl justify-center px-0 py-5 sm:px-6 lg:px-8 lg:py-5 mx-auto space-y-5">
       <div className="relative space-y-1">

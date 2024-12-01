@@ -14,6 +14,7 @@ type Props = {
   maxLength?: number;
   autoComplete?: string;
   mandatory?: any;
+  description?: string;
 };
 
 function InputText({
@@ -26,6 +27,7 @@ function InputText({
   maxLength,
   autoComplete,
   readOnly,
+  description,
   ...rest
 }: Props) {
   const {
@@ -91,6 +93,11 @@ function InputText({
           </p>
         ) : (
           ""
+        )}
+        {description && (
+          <p className="mt-2 ms-2 text-xs text-gray-500 dark:text-white font-normal">
+            {description}
+          </p>
         )}
       </div>
     </div>
