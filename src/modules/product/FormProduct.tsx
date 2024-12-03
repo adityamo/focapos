@@ -27,6 +27,8 @@ import InputQty from "@/components/inputs/InputQty";
 import InputNum from "@/components/inputs/InputNum";
 import { FiPlusCircle, FiTrash2 } from "react-icons/fi";
 import InputSelect from "@/components/inputs/InputSelect";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ProductSchema } from "@/entities/product/product";
 
 type Props = {
   defaultValues: any;
@@ -61,6 +63,7 @@ const FormProduct: ForwardRefRenderFunction<FormProductRefType, Props> = (
       priceData: [{ qty1: 1, qty2: 1, unitPrice: 0 }],
       ...defaultValues,
     },
+    resolver: zodResolver(ProductSchema),
   });
 
   useImperativeHandle(ref, () => ({

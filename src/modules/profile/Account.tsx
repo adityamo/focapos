@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
+import ChangeProfilePict from "./modal/MdlChangeProfilePict";
 // import MdlAccount from "./modal/MdlAccount";
 import { AccountValues } from "@/interface/settings";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,6 +18,7 @@ interface Props {
 
 const Account = ({ user }: Props) => {
   const [loading, setLoading] = useState(false);
+  const [modalPict, setModalPict] = useState(false);
   const { handleSubmit, control, reset } = useForm<AccountValues>({
     resolver: zodResolver(AccountInformationSchema),
     defaultValues: {
@@ -35,6 +37,15 @@ const Account = ({ user }: Props) => {
   );
 
   const dispatch = useDispatch();
+
+  const openModalPict = () => {
+    setModalPict(!modalPict);
+  };
+
+  const updateUser = async () => {
+    const user: any = await refetchProfile();
+    dispatch(setUser(user.result));
+  };
 
   // const openModal = () => {
   //   setIsModalOpen(true);
@@ -93,7 +104,12 @@ const Account = ({ user }: Props) => {
                 className="w-20 h-20"
               />
             </div>
-            <button className="w-full px-10 py-2 bg-white rounded-lg border border-gray-200 shadow-sm text-slate-700 text-sm font-semibold hover:bg-slate-200">
+            <button
+              onClick={(e) => {
+                openModalPict();
+              }}
+              className="w-full px-10 py-2 bg-white rounded-lg border border-gray-200 shadow-sm text-slate-700 text-sm font-semibold hover:bg-slate-200"
+            >
               Pilih Foto
             </button>
             <small className="text-xs text-gray-500 font-normal">
@@ -171,6 +187,11 @@ const Account = ({ user }: Props) => {
           </div>
         </div>
       </div>
+      <ChangeProfilePict
+        isOpen={modalPict}
+        handleClose={openModalPict}
+        updateProfile={updateUser}
+      />
       {/* <MdlAccount isOpen={isModaOpen} onClose={closeModal} /> */}
     </div>
   );

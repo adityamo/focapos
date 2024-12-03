@@ -16,4 +16,9 @@ export const ProductSchema = z.object({
       required_error: "Deskripsi wajib diisi",
     })
     .min(2, { message: "Deskripsi Harus lebih dari 2 karakter" }),
+  category_id: z
+    .string({
+      required_error: "Category Wajib dipilih",
+    })
+    .min(1, { message: "Category Wajib dipilih" }),
 });
