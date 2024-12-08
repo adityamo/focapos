@@ -1,29 +1,23 @@
 "use client";
-import { RootState } from "@/store/store";
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+
+import React from "react";
 import Image from "next/image";
 import { FiActivity, FiShoppingCart, FiPackage } from "react-icons/fi";
+import { useSession } from "next-auth/react";
 
 const SalesToday = () => {
-  const { user } = useSelector((state: RootState) => state.User);
-  const [username, setUsername] = useState("");
+  const { data: session }: any = useSession();
 
-  useEffect(() => {
-    if (user) {
-      setUsername(user.name);
-    }
-  }, []);
   return (
     <div className="relative space-y-4">
       <div className="flex flex-col lg:flex-row w-full lg:justify-between ">
-        <div className="space-y-2">
-          {username ? (
+        <div className="space-y-2 w-full">
+          {session?.user ? (
             <>
               <h3 className="text-slate-700 dark:text-white font-semibold text-2xl">
                 Selamat Datang,{" "}
                 <span className="text-indigo-700 dark:text-indigo-400">
-                  {username}
+                  {session?.user?.name}
                 </span>
               </h3>
               <p className="text-gray-500 font-medium text-sm dark:text-white">

@@ -24,11 +24,11 @@ import InputText from "@/components/inputs/InputText";
 import InputTextArea from "@/components/inputs/InputTextArea";
 import InputUpload from "@/components/inputs/InputUpload";
 import InputQty from "@/components/inputs/InputQty";
-import InputNum from "@/components/inputs/InputNum";
 import { FiPlusCircle, FiTrash2 } from "react-icons/fi";
 import InputSelect from "@/components/inputs/InputSelect";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ProductSchema } from "@/entities/product/product";
+import InputCurrency from "@/components/inputs/inputCurrency";
 
 type Props = {
   defaultValues: any;
@@ -54,12 +54,15 @@ const FormProduct: ForwardRefRenderFunction<FormProductRefType, Props> = (
 
   const { control, register, handleSubmit, setValue, setError } = useForm({
     defaultValues: {
+      id: "",
       productCode: "",
       productName: "",
       description: "",
-      category_id: "",
-      store_id: storeID,
+      category_id: null,
+      store_id: user?.store_id || "",
       isActive: true,
+      productThumbnail: "",
+      productImg: "",
       priceData: [{ qty1: 1, qty2: 1, unitPrice: 0 }],
       ...defaultValues,
     },
@@ -89,51 +92,16 @@ const FormProduct: ForwardRefRenderFunction<FormProductRefType, Props> = (
   return (
     <form className="" onSubmit={handleSubmit(onSubmit)}>
       <div className="grid lg:grid-cols-12 gap-5">
-        <input type="hidden" {...register("store_id")} value={storeID} />
+        <input type="hidden" {...register("id")} />
+        <input type="hidden" {...register("store_id")} />
         <div className="lg:col-span-8 space-y-4">
           <div className="relative space-y-2 bg-white dark:bg-slate-700 rounded-md shadow-sm">
             <div className="p-5 relative w-full border-b border-gray-200">
-              <h4 className="text-slate-700 text-md font-medium">
+              <h4 className="text-slate-700 text-md font-medium dark:text-white">
                 Informasi Produk
               </h4>
             </div>
             <div className="p-5 relative w-full space-y-5">
-              {/* <div className="space-y-4">
-                <label
-                  htmlFor=""
-                  className="block text-xs lg:text-[13px] text-slate-700 font-medium mb-2 dark:text-white"
-                >
-                  Foto Sampul
-                </label>
-                <div className="flex flex-row w-full items-center">
-                  <Image
-                    src={"/assets/images/user/anon-pic-circle.svg"}
-                    width={30}
-                    height={30}
-                    alt="profilepict"
-                    className="w-20 h-20 me-4"
-                  />
-                  <div className="relative space-y-1">
-                    <div className="flex">
-                      <button className="inline-flex items-center px-5 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-md text-xs text-white">
-                        <span className="me-2">
-                          <FiShare />
-                        </span>{" "}
-                        Upload Photo
-                      </button>
-                      <button className="ms-3 px-5 py-2 bg-white hover:bg-red-500 hover:text-white border border-gray-200 rounded-md text-xs text-red-500">
-                        Candel
-                      </button>
-                    </div>
-                    <div>
-                      <small className="text-xs text-gray-500 font-normal">
-                        Your image should be square, at least 100x100px, and JPG
-                        or PNG.
-                      </small>
-                    </div>
-                  </div>
-                </div>
-              </div> */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                 <div className="lg:col-span-1">
                   <InputText
@@ -141,7 +109,7 @@ const FormProduct: ForwardRefRenderFunction<FormProductRefType, Props> = (
                     name="productCode"
                     control={control}
                     placeholder="Masukan nama produk"
-                    description="Buat kode produk unik"
+                    description="Buat kode produk unik, atau kode produk yang dapat discan"
                   />
                 </div>
                 <div className="lg:col-span-2">
@@ -171,7 +139,7 @@ const FormProduct: ForwardRefRenderFunction<FormProductRefType, Props> = (
               </h4>
             </div>
             <div className="p-5">
-              <InputUpload name="file" control={control} />
+              <InputUpload name="productImg" control={control} />
             </div>
           </div>
           <div className="relative space-y-2 bg-white dark:bg-slate-700 rounded-md shadow-sm">
@@ -196,12 +164,14 @@ const FormProduct: ForwardRefRenderFunction<FormProductRefType, Props> = (
                       control={control}
                     />
                     <div className="flex w-full items-end col-span-2">
-                      <InputNum
+                      <InputCurrency
                         label="Harga"
-                        name="unitPrice"
+                        name={`priceData.${index}.unitPrice`}
                         control={control}
                         placeholder="Masukan Harga"
+                        indonesiaCurrency={true}
                       />
+
                       <div className="ms-4 flex items-end">
                         <button
                           type="button"
@@ -237,7 +207,7 @@ const FormProduct: ForwardRefRenderFunction<FormProductRefType, Props> = (
               </h4>
             </div>
             <div className="p-5 relative w-full">
-              <InputUpload name="file" control={control} />
+              <InputUpload name="productThumbnail" control={control} />
             </div>
           </div>
           <div className="relative bg-white dark:bg-slate-700 rounded-md shadow-sm">

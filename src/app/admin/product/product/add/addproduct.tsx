@@ -5,14 +5,35 @@ import { SubmitHandler } from "react-hook-form";
 import { ProductValues } from "@/interface/product/product";
 
 import FormProduct, { FormProductRefType } from "@/modules/product/FormProduct";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store/store";
 
 const AddProduct = () => {
   const ref = useRef<FormProductRefType>(null);
   const [loading, setLoading] = useState(false);
+  const { user } = useSelector((state: RootState) => state.User);
 
   const onSubmit: SubmitHandler<ProductValues> = (data) => {
     setLoading(true);
     console.log("Submitted Data", data);
+    const sendData = {
+      product: {
+        store_id: data.store_id,
+        category_id: data.category_id,
+        productCode: data.productCode,
+        productName: data.productName,
+        description: data.description,
+        isActive: data.isActive,
+        createdBy: user.id,
+        updateBy: 0,
+      },
+      productPrice: data.priceData,
+      productImage: {
+        thumbnail: data.productThumbnail,
+      },
+    };
+
+    console.log(sendData);
   };
 
   return (

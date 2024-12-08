@@ -25,8 +25,9 @@ function InputSelect({
   } = useController({ name, control });
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = event.target.value;
-    onChange(value);
+    const rawValue = event.target.value;
+    const parsedValue = isNaN(Number(rawValue)) ? rawValue : Number(rawValue); // Parse value if it's a number
+    onChange(parsedValue);
   };
 
   return (

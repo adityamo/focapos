@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import Image from "next/image";
 import ChangeProfilePict from "./modal/MdlChangeProfilePict";
@@ -188,6 +189,7 @@ const Account = ({ user }: Props) => {
         </div>
       </div>
       <ChangeProfilePict
+        id={user.id}
         isOpen={modalPict}
         handleClose={openModalPict}
         updateProfile={updateUser}

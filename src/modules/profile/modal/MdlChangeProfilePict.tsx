@@ -6,10 +6,13 @@ import * as Yup from "yup";
 import InputUpload from "@/components/inputs/InputUpload";
 import { nanoid } from "nanoid";
 import supabase from "@/utils/spbaseclient";
+import { api } from "@/utils/api";
+import { toast } from "react-toastify";
 // import withReactContent from "sweetalert2-react-content";
 // import Swal from "sweetalert2";
 
 interface Props {
+  id: any;
   isOpen: any;
   handleClose: () => void;
   updateProfile: () => void;
@@ -23,7 +26,12 @@ const schema = Yup.object().shape({
   file: Yup.array().required("Please Choose your pict"),
 });
 
-const ChangeProfilePict = ({ isOpen, handleClose, updateProfile }: Props) => {
+const ChangeProfilePict = ({
+  id,
+  isOpen,
+  handleClose,
+  updateProfile,
+}: Props) => {
   const [loading, setLoading] = useState(false);
   const { handleSubmit, control } = useForm<ProfilePicValuesTypes>({
     resolver: yupResolver(schema),
@@ -31,27 +39,47 @@ const ChangeProfilePict = ({ isOpen, handleClose, updateProfile }: Props) => {
       file: "",
     },
   });
+
+  const { mutate: changeProfilePict } =
+    api.profile.changeProfilePict.useMutation();
+
   //   const MySwal = withReactContent(Swal);
 
   const onSubmit = async (values: any) => {
     setLoading(true);
     if (values.file[0]) {
       const filePath = values.file[0];
-      console.log(values.file);
+
       const filename = nanoid();
       const { data, error } = await supabase.storage
         .from("focastorage")
-        .upload(`${filename}.${filePath.name.split(".").pop()}`, filePath);
+        .upload(
+          `profilePict/${filename}.${filePath.name.split(".").pop()}`,
+          filePath
+        );
 
       if (error) {
         setLoading(false);
         console.error("Error uploading file:", error.message);
       } else {
-        setLoading(false);
         const { data: file } = await supabase.storage
           .from("focastorage")
           .getPublicUrl(data?.path);
-        console.log(file);
+
+        const sendData: any = {
+          id: id,
+          file: file.publicUrl,
+        };
+        changeProfilePict(sendData, {
+          onSuccess: async () => {
+            setLoading(false);
+            toast.success("Berhasil update Akun");
+          },
+          onError: () => {
+            setLoading(false);
+            toast.error("Gagal update akun");
+          },
+        });
       }
     }
   };

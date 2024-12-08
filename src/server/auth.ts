@@ -77,8 +77,10 @@ export const authOptions: NextAuthOptions = {
       // const dbUser = await prisma.user.findUnique({
       //   where: { email: token.email },
       // });
+      console.log(token);
       session.user.id = encryptID(token.id);
       session.user.name = token.username;
+      session.user.picture = token.picture;
       return session;
     },
   },

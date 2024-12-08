@@ -60,6 +60,28 @@ export const profileController = createTRPCRouter({
         message: "Success Submit",
       };
     }),
+  changeProfilePict: protectedProcedure
+    .input(z.object({ id: z.number(), file: z.string() }))
+    .mutation(async ({ input, ctx }: any) => {
+      const updateProfilePict = await ctx.prisma.user.update({
+        where: { id: input.id },
+        data: {
+          image: input.file,
+        },
+      });
+
+      if (!updateProfilePict) {
+        return {
+          code: 500,
+          message: "Failed to submit",
+        };
+      }
+
+      return {
+        code: 200,
+        message: "Success Submit",
+      };
+    }),
   changePassword: protectedProcedure
     .input(
       z.object({

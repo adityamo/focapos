@@ -1,3 +1,4 @@
+import { ProductSchema } from "@/entities/product/product";
 import { createTRPCRouter } from "../../trpc";
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
@@ -28,5 +29,10 @@ export const productController = createTRPCRouter({
         message: "Success Fetch DDL",
         data: ddl,
       };
+    }),
+  store: protectedProcedure
+    .input(ProductSchema)
+    .mutation(async ({ ctx, input }) => {
+      console.log(input);
     }),
 });

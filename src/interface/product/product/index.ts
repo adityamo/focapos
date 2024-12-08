@@ -2,8 +2,9 @@ export type ProductValues = {
   productCode: string;
   productName: string;
   description: string;
-  category_id: any;
-  store_id: number;
+  category_id: number;
+  store_id: string;
+  productThumbnail: any;
   isActive: boolean;
   priceData: ProductPriceValue[];
 };
