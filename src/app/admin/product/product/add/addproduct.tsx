@@ -5,35 +5,60 @@ import { SubmitHandler } from "react-hook-form";
 import { ProductValues } from "@/interface/product/product";
 
 import FormProduct, { FormProductRefType } from "@/modules/product/FormProduct";
-import { useSelector } from "react-redux";
-import { RootState } from "@/store/store";
+import { api } from "@/utils/api";
+import { toast } from "react-toastify";
+import { nanoid } from "@reduxjs/toolkit";
+import supabase from "@/utils/spbaseclient";
 
 const AddProduct = () => {
   const ref = useRef<FormProductRefType>(null);
   const [loading, setLoading] = useState(false);
-  const { user } = useSelector((state: RootState) => state.User);
+  const { mutate: postProduct } = api.product.store.useMutation();
 
-  const onSubmit: SubmitHandler<ProductValues> = (data) => {
+  const onSubmit: SubmitHandler<ProductValues> = async (data: any) => {
     setLoading(true);
-    console.log("Submitted Data", data);
-    const sendData = {
-      product: {
-        store_id: data.store_id,
-        category_id: data.category_id,
-        productCode: data.productCode,
-        productName: data.productName,
-        description: data.description,
-        isActive: data.isActive,
-        createdBy: user.id,
-        updateBy: 0,
-      },
-      productPrice: data.priceData,
-      productImage: {
-        thumbnail: data.productThumbnail,
-      },
-    };
+    const thumbnailPath = data.productThumbnail?.[0];
+    const thumbnailFileName = nanoid();
 
-    console.log(sendData);
+    let fileUrl = null;
+
+    try {
+      if (thumbnailPath) {
+        const { data: uploadThumbnail, error: uploadThumbnailErr } =
+          await supabase.storage
+            .from("focastorage")
+            .upload(
+              `product/${thumbnailFileName}.${thumbnailPath.name.split(".").pop()}`,
+              thumbnailPath
+            );
+
+        if (uploadThumbnailErr) throw new Error(uploadThumbnailErr.message);
+
+        fileUrl = supabase.storage
+          .from("focastorage")
+          .getPublicUrl(uploadThumbnail?.path).data.publicUrl;
+      }
+
+      const payload = {
+        ...data,
+        productThumbnail: fileUrl,
+      };
+
+      postProduct(payload, {
+        onSuccess: (resp: any) => {
+          setLoading(false);
+          toast.success("Product Berhasil Dibuat");
+          console.log(resp);
+        },
+        onError: () => {
+          setLoading(false);
+          toast.error("Gagal membuat product");
+        },
+      });
+    } catch (error: any) {
+      setLoading(false);
+      toast.error(error.message || "File upload failed");
+    }
   };
 
   return (

@@ -38,7 +38,9 @@ export const TableBody = <T extends Record<string, unknown>>(
             ))
           ) : (
             <tr className="text-center">
-              <td colSpan={columnLength}>Data Kosong</td>
+              <td colSpan={columnLength} className="py-5">
+                Data Kosong
+              </td>
             </tr>
           )}
         </tbody>

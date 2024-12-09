@@ -103,14 +103,16 @@ const FormProduct: ForwardRefRenderFunction<FormProductRefType, Props> = (
             </div>
             <div className="p-5 relative w-full space-y-5">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                <div className="lg:col-span-1">
-                  <InputText
-                    label="Kode Produk"
-                    name="productCode"
-                    control={control}
-                    placeholder="Masukan nama produk"
-                    description="Buat kode produk unik, atau kode produk yang dapat discan"
-                  />
+                <div className="lg:col-span-2">
+                  <div className="flex w-full lg:w-3/4">
+                    <InputText
+                      label="Kode Produk"
+                      name="productCode"
+                      control={control}
+                      placeholder="Masukan nama produk"
+                      description="Buat kode produk unik, atau kode produk yang dapat discan"
+                    />
+                  </div>
                 </div>
                 <div className="lg:col-span-2">
                   <InputText
