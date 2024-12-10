@@ -54,7 +54,6 @@ const FormProduct: ForwardRefRenderFunction<FormProductRefType, Props> = (
 
   const { control, register, handleSubmit, setValue, setError } = useForm({
     defaultValues: {
-      id: "",
       productCode: "",
       productName: "",
       description: "",
@@ -92,7 +91,6 @@ const FormProduct: ForwardRefRenderFunction<FormProductRefType, Props> = (
   return (
     <form className="" onSubmit={handleSubmit(onSubmit)}>
       <div className="grid lg:grid-cols-12 gap-5">
-        <input type="hidden" {...register("id")} />
         <input type="hidden" {...register("store_id")} />
         <div className="lg:col-span-8 space-y-4">
           <div className="relative space-y-2 bg-white dark:bg-slate-700 rounded-md shadow-sm">

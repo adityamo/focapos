@@ -1,4 +1,4 @@
-import { ProductSchema } from "@/entities/product/product";
+// import { ProductSchema } from "@/entities/product/product";
 import { createTRPCRouter } from "../../trpc";
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
@@ -32,21 +32,29 @@ export const productController = createTRPCRouter({
       };
     }),
   store: protectedProcedure
-    .input(ProductSchema)
+    .input((input) => input)
     .mutation(async ({ ctx, input }: any) => {
       const user: any = ctx?.session?.user;
       const userID = decryptID(user.id);
-      console.log(input);
 
-      const productData = {
-        store_id: input.store_id,
-        category_id: input.category_id,
+      const productData: any = {
         productCode: input.productCode,
         productName: input.productName,
         description: input.description,
         isActive: input.isActive,
         createdBy: userID,
-        updateBy: 0,
+        updatedBy: 0,
+        M003_Store: {
+          // Pass the store as a nested relation
+          connect: {
+            id: input.store_id, // Referencing the store by its id
+          },
+        },
+        M2001_ProductCategories: {
+          connect: {
+            id: input.category_id,
+          },
+        },
       };
 
       const createProduct = await ctx.prisma.m2002_Product.create({

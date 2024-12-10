@@ -15,9 +15,10 @@ const AddProduct = () => {
   const [loading, setLoading] = useState(false);
   const { mutate: postProduct } = api.product.store.useMutation();
 
-  const onSubmit: SubmitHandler<ProductValues> = async (data: any) => {
+  const onSubmit: SubmitHandler<ProductValues> = async (values: any) => {
     setLoading(true);
-    const thumbnailPath = data.productThumbnail?.[0];
+
+    const thumbnailPath = values.productThumbnail?.[0];
     const thumbnailFileName = nanoid();
 
     let fileUrl = null;
@@ -40,7 +41,7 @@ const AddProduct = () => {
       }
 
       const payload = {
-        ...data,
+        ...values,
         productThumbnail: fileUrl,
       };
 

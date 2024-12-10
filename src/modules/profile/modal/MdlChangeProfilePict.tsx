@@ -47,6 +47,7 @@ const ChangeProfilePict = ({
 
   const onSubmit = async (values: any) => {
     setLoading(true);
+    console.log(values.file[0]);
     if (values.file[0]) {
       const filePath = values.file[0];
 

@@ -7,7 +7,6 @@ const ProductPriceSchema = z.object({
 });
 
 export const ProductSchema = z.object({
-  id: z.string().optional(),
   productCode: z
     .string({
       required_error: "Kode Produk wajib diisi",
@@ -37,14 +36,6 @@ export const ProductSchema = z.object({
   isActive: z.boolean({
     required_error: "Status Harus dipilih",
   }),
-  productThumbnail: z
-    .array(
-      z.object({
-        name: z.string(),
-        type: z.string(),
-        preview: z.string().url(),
-      })
-    )
-    .optional(),
+  productThumbnail: z.array(z.instanceof(Blob)).optional(),
   priceData: z.array(ProductPriceSchema).optional(),
 });
