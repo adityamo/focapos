@@ -16,7 +16,7 @@ function InputQty({
   name,
   control,
   min = 1,
-  max = 50,
+  max = 10000000,
   step = 1,
   required,
 }: Props) {

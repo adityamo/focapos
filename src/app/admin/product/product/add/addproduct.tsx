@@ -5,14 +5,61 @@ import { SubmitHandler } from "react-hook-form";
 import { ProductValues } from "@/interface/product/product";
 
 import FormProduct, { FormProductRefType } from "@/modules/product/FormProduct";
+import { api } from "@/utils/api";
+import { toast } from "react-toastify";
+import { nanoid } from "@reduxjs/toolkit";
+import supabase from "@/utils/spbaseclient";
 
 const AddProduct = () => {
   const ref = useRef<FormProductRefType>(null);
   const [loading, setLoading] = useState(false);
+  const { mutate: postProduct } = api.product.store.useMutation();
 
-  const onSubmit: SubmitHandler<ProductValues> = (data) => {
+  const onSubmit: SubmitHandler<ProductValues> = async (values: any) => {
     setLoading(true);
-    console.log("Submitted Data", data);
+
+    const thumbnailPath = values.productThumbnail?.[0];
+    const thumbnailFileName = nanoid();
+
+    let fileUrl = null;
+
+    try {
+      if (thumbnailPath) {
+        const { data: uploadThumbnail, error: uploadThumbnailErr } =
+          await supabase.storage
+            .from("focastorage")
+            .upload(
+              `product/${thumbnailFileName}.${thumbnailPath.name.split(".").pop()}`,
+              thumbnailPath
+            );
+
+        if (uploadThumbnailErr) throw new Error(uploadThumbnailErr.message);
+
+        fileUrl = supabase.storage
+          .from("focastorage")
+          .getPublicUrl(uploadThumbnail?.path).data.publicUrl;
+      }
+
+      const payload = {
+        ...values,
+        productThumbnail: fileUrl,
+      };
+
+      postProduct(payload, {
+        onSuccess: (resp: any) => {
+          setLoading(false);
+          toast.success("Product Berhasil Dibuat");
+          console.log(resp);
+        },
+        onError: () => {
+          setLoading(false);
+          toast.error("Gagal membuat product");
+        },
+      });
+    } catch (error: any) {
+      setLoading(false);
+      toast.error(error.message || "File upload failed");
+    }
   };
 
   return (

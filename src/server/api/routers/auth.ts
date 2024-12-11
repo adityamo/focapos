@@ -39,6 +39,7 @@ export const authRouter = createTRPCRouter({
         name: user.name,
         company_id: user.M001_Company?.id || null,
         company_name: user.M001_Company?.company_name || null,
+        profile_pict: user.image || null,
         store_id: user.M003_Store?.id || null,
         store_name: user.M003_Store?.store_name || null,
         roles_id: user.M1001_Roles?.id || null,

@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
+// import Image from "next/image";
 import ClickOutside from "@/components/clickoutside";
 import { signOut, useSession } from "next-auth/react";
 import { useDispatch } from "react-redux";
@@ -27,7 +27,22 @@ const DropdownUser = () => {
         </span>
 
         <span className="h-10 w-10 rounded-full">
-          <Image
+          <img
+            alt="user"
+            width={112}
+            height={112}
+            className="w-10 h-10 rounded-full"
+            src={session?.user?.picture}
+            style={{
+              width: "auto",
+              height: "auto",
+            }}
+            onError={({ currentTarget }) => {
+              currentTarget.onerror = null; // prevents looping
+              currentTarget.src = "/assets/images/user/user-01.png";
+            }}
+          />
+          {/* <Image
             width={112}
             height={112}
             src={"/assets/images/user/user-01.png"}
@@ -36,7 +51,7 @@ const DropdownUser = () => {
               height: "auto",
             }}
             alt="User"
-          />
+          /> */}
         </span>
 
         <svg

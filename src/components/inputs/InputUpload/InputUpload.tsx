@@ -2,14 +2,16 @@ import React, { useEffect, useState } from "react";
 import { DropzoneOptions, useDropzone } from "react-dropzone";
 import { Control, useController } from "react-hook-form";
 import { Container, thumb, thumbInner, thumbsContainer } from "./style";
+import imageCompression from "browser-image-compression";
 
 type Props = {
   name: string;
   control: Control<any>;
+  compressImages?: boolean;
   // onErrorCus: boolean;
 } & Partial<DropzoneOptions>;
 
-const InputUpload = ({ name, control }: Props) => {
+const InputUpload = ({ name, control, compressImages = false }: Props) => {
   const {
     field: { onChange, ref },
     fieldState: { invalid, error },
@@ -18,20 +20,39 @@ const InputUpload = ({ name, control }: Props) => {
     control,
   });
 
-  const [uploadFiles, setUploadFiles] = useState([]);
+  const [uploadFiles, setUploadFiles] = useState<any[]>([]);
+
+  const compressImage: any = async (file: File) => {
+    try {
+      const options = {
+        maxSizeMB: 1, // Maximum file size in MB
+        maxWidthOrHeight: 800, // Maximum dimensions
+        useWebWorker: true, // Use web worker for faster compression
+      };
+      return await imageCompression(file, options);
+    } catch (err) {
+      console.error("Compression failed:", err);
+      return file; // Return original file in case of error
+    }
+  };
+
+  const handleDrop = async (acceptedFiles: File[]) => {
+    const processedFiles = await Promise.all(
+      acceptedFiles.map(async (file) => {
+        const compressedFile = compressImage ? await compressImage(file) : file;
+        return Object.assign(compressedFile, {
+          preview: URL.createObjectURL(compressedFile),
+        });
+      })
+    );
+
+    setUploadFiles(processedFiles);
+    onChange(processedFiles);
+  };
 
   const { getInputProps, getRootProps, isFocused, isDragAccept, isDragReject } =
     useDropzone({
-      onDrop: (acceptedFiles: any) => {
-        setUploadFiles(
-          acceptedFiles.map((file: any) =>
-            Object.assign(file, {
-              preview: URL.createObjectURL(file),
-            })
-          )
-        );
-        onChange(acceptedFiles);
-      },
+      onDrop: handleDrop,
       accept: {
         "image/*": [".jpeg", ".png", ".svg"],
       },
