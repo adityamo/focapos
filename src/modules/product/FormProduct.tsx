@@ -46,10 +46,10 @@ const FormProduct: ForwardRefRenderFunction<FormProductRefType, Props> = (
   ref
 ) => {
   const { user } = useSelector((state: RootState) => state.User);
-  const [storeID, setStoreID] = useState(0);
+  const [storeID, setStoreID] = useState("");
 
   const { data, refetch } = api.product.getCategoryDDL.useQuery(
-    { store_id: storeID } // Input for the query
+    { storeId: storeID } // Input for the query
   );
 
   const { control, register, handleSubmit, setValue, setError } = useForm({
