@@ -31,11 +31,11 @@ const FormStore = ({
     mode: "all",
     resolver: zodResolver(RegisterStoreSchema),
     defaultValues: {
-      store_name: "",
+      storeName: "",
       address: "",
       phone: "",
-      bank_type: "",
-      bank_tf: "",
+      bankType: "",
+      bankTf: "",
     },
   });
 
@@ -57,7 +57,7 @@ const FormStore = ({
         <form onSubmit={handleSubmit(nextSubmit)}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-7">
             <InputText
-              name="store_name"
+              name="storeName"
               label="Nama Toko"
               placeholder="Silahkan masukan nama toko anda"
               control={control}
@@ -72,13 +72,13 @@ const FormStore = ({
             />
             <InputSelect
               label="Bank"
-              name="bank_type"
+              name="bankType"
               placeholder="Pilih Bank"
               options={typeBank}
               control={control}
             />
             <InputText
-              name="bank_tf"
+              name="bankTf"
               label="Nomer Rekening"
               placeholder="Silahkan masukan nomer rekening  anda"
               control={control}

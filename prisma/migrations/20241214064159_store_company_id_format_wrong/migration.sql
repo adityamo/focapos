@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "M003_Store" ALTER COLUMN "companyId" SET DATA TYPE TEXT;

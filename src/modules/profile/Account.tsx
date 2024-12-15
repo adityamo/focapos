@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import Image from "next/image";
 import ChangeProfilePict from "./modal/MdlChangeProfilePict";
 // import MdlAccount from "./modal/MdlAccount";
 import { AccountValues } from "@/interface/settings";
@@ -12,6 +11,7 @@ import { api } from "@/utils/api";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/store/reducers/UserDataSlice";
+import { useSession } from "next-auth/react";
 
 interface Props {
   user: any;
@@ -20,6 +20,7 @@ interface Props {
 const Account = ({ user }: Props) => {
   const [loading, setLoading] = useState(false);
   const [modalPict, setModalPict] = useState(false);
+  const { data: session, update }: any = useSession();
   const { handleSubmit, control, reset } = useForm<AccountValues>({
     resolver: zodResolver(AccountInformationSchema),
     defaultValues: {
@@ -45,7 +46,10 @@ const Account = ({ user }: Props) => {
 
   const updateUser = async () => {
     const user: any = await refetchProfile();
-    dispatch(setUser(user.result));
+    const imageGet = user.data.image;
+
+    await update({ user: { ...session.user, picture: imageGet } });
+    dispatch(setUser(user.data));
   };
 
   // const openModal = () => {
@@ -97,11 +101,11 @@ const Account = ({ user }: Props) => {
         <div className="grid lg:grid-cols-3 gap-5">
           <div className="flex flex-col space-y-4 bg-white border border-gray-200 rounded-lg p-4">
             <div className="flex w-full items-center justify-center">
-              <Image
-                src={"/assets/images/user/anon-pic-circle.svg"}
+              <img
+                src={user?.image || "/assets/images/user/anon-pic-circle.svg"}
                 width={30}
                 height={30}
-                alt="profilepict"
+                alt={`profilepict-${user.name}`}
                 className="w-20 h-20"
               />
             </div>

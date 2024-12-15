@@ -1,4 +1,3 @@
-import { decryptID } from "@/helpers/EncryptHelper";
 import { createTRPCRouter } from "../../trpc";
 import { protectedProcedure } from "../../trpc";
 import * as bs from "bcryptjs";
@@ -6,7 +5,7 @@ import { z } from "zod";
 
 export const profileController = createTRPCRouter({
   getDetailProfile: protectedProcedure.query(async ({ ctx }: any) => {
-    const userID: any = decryptID(ctx.session?.user?.id);
+    const userID: any = ctx.session?.user?.id;
     const user = await ctx.prisma.user.findUnique({
       where: {
         id: userID,
@@ -34,7 +33,7 @@ export const profileController = createTRPCRouter({
   changeAccount: protectedProcedure
     .input(
       z.object({
-        id: z.number(),
+        id: z.string(),
         name: z.string(),
         email: z.string(),
       })
@@ -61,7 +60,7 @@ export const profileController = createTRPCRouter({
       };
     }),
   changeProfilePict: protectedProcedure
-    .input(z.object({ id: z.number(), file: z.string() }))
+    .input(z.object({ id: z.string(), file: z.string() }))
     .mutation(async ({ input, ctx }: any) => {
       const updateProfilePict = await ctx.prisma.user.update({
         where: { id: input.id },

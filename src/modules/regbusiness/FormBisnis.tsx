@@ -42,13 +42,13 @@ const FormBisnis = ({ formStep, nextFormStep, typeBusiness }: Props) => {
     mode: "all",
     resolver: zodResolver(RegisterCompanySchema),
     defaultValues: {
-      company_name: "",
-      company_owner: "",
-      business_typeID: "",
-      operational_time: "",
-      province_code: "",
-      city_code: "",
-      district_code: "",
+      companyName: "",
+      companyOwner: "",
+      businessTypeId: "",
+      operationalTime: "",
+      provinceId: "",
+      cityId: "",
+      districtId: "",
     },
   });
 
@@ -71,7 +71,7 @@ const FormBisnis = ({ formStep, nextFormStep, typeBusiness }: Props) => {
 
     if (provinceID) {
       setSelectedProvince(provinceID);
-      setValue("province_code", provinceID);
+      setValue("provinceId", provinceID);
       await fetch(
         `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinceID}.json`
       )
@@ -89,7 +89,7 @@ const FormBisnis = ({ formStep, nextFormStep, typeBusiness }: Props) => {
 
     if (cityId) {
       setSelectedCity(cityId);
-      setValue("city_code", cityId);
+      setValue("cityId", cityId);
 
       await fetch(
         `https://www.emsifa.com/api-wilayah-indonesia/api/districts/${cityId}.json`
@@ -125,27 +125,27 @@ const FormBisnis = ({ formStep, nextFormStep, typeBusiness }: Props) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-7">
             <InputText
-              name="company_name"
+              name="companyName"
               label="Nama Perusahaan"
               placeholder="Silahkan masukan nama perusahaan"
               control={control}
             />
             <InputText
-              name="company_owner"
+              name="companyOwner"
               label="Nama Pemilik Usaha"
               placeholder="Silahkan masukan nama Pemilik"
               control={control}
             />
             <InputSelect
               label="Tipe Bisnis"
-              name="business_typeID"
+              name="businessTypeId"
               placeholder="Pilih tipe bisnis anda"
               options={typeBusiness}
               control={control}
             />
             <InputSelect
               label="Lama Beroperasi"
-              name="operational_time"
+              name="operationalTime"
               placeholder="Pilih berapa lama beroperasi"
               options={operationalTime}
               control={control}
@@ -157,13 +157,13 @@ const FormBisnis = ({ formStep, nextFormStep, typeBusiness }: Props) => {
                 </label>
                 <div>
                   <select
-                    {...register("province_code")}
+                    {...register("provinceId")}
                     name="province"
                     onChange={(e: any) => {
                       handleChangeProvince(e.target.value);
                     }}
                     value={selectedProvince}
-                    className={`py-3 px-3 pe-9 block w-full ${errors.province_code ? "border-red-500" : "border-gray-200"} rounded-lg text-sm border focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600`}
+                    className={`py-3 px-3 pe-9 block w-full ${errors.provinceId ? "border-red-500" : "border-gray-200"} rounded-lg text-sm border focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600`}
                   >
                     <option disabled={true} value={""}>
                       Pilih Provinsi
@@ -177,7 +177,7 @@ const FormBisnis = ({ formStep, nextFormStep, typeBusiness }: Props) => {
                         );
                       })}
                   </select>
-                  {errors.province_code ? (
+                  {errors.provinceId ? (
                     <div className="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
                       <svg
                         className="flex-shrink-0 size-4 text-red-500"
@@ -200,12 +200,12 @@ const FormBisnis = ({ formStep, nextFormStep, typeBusiness }: Props) => {
                     ""
                   )}
                 </div>
-                {errors.province_code ? (
+                {errors.provinceId ? (
                   <p
                     className="text-sm text-red-600 mt-2"
                     id="hs-validation-name-error-helper"
                   >
-                    {errors.province_code.message?.toString()}
+                    {errors.provinceId.message?.toString()}
                   </p>
                 ) : (
                   ""
@@ -219,13 +219,13 @@ const FormBisnis = ({ formStep, nextFormStep, typeBusiness }: Props) => {
                 </label>
                 <div>
                   <select
-                    {...register("city_code")}
+                    {...register("cityId")}
                     name="city"
                     onChange={(e: any) => {
                       handleChangeCity(e.target.value);
                     }}
                     value={selectedCity}
-                    className={`py-3 px-3 pe-9 block w-full ${errors.city_code ? "border-red-500" : "border-gray-200"} rounded-lg text-sm border focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600`}
+                    className={`py-3 px-3 pe-9 block w-full ${errors.cityId ? "border-red-500" : "border-gray-200"} rounded-lg text-sm border focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600`}
                   >
                     <option disabled={true} value={""}>
                       Pilih Kota
@@ -239,7 +239,7 @@ const FormBisnis = ({ formStep, nextFormStep, typeBusiness }: Props) => {
                         );
                       })}
                   </select>
-                  {errors.city_code ? (
+                  {errors.cityId ? (
                     <div className="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
                       <svg
                         className="flex-shrink-0 size-4 text-red-500"
@@ -262,12 +262,12 @@ const FormBisnis = ({ formStep, nextFormStep, typeBusiness }: Props) => {
                     ""
                   )}
                 </div>
-                {errors.city_code ? (
+                {errors.cityId ? (
                   <p
                     className="text-sm text-red-600 mt-2"
                     id="hs-validation-name-error-helper"
                   >
-                    {errors.city_code.message?.toString()}
+                    {errors.cityId.message?.toString()}
                   </p>
                 ) : (
                   ""
@@ -281,14 +281,14 @@ const FormBisnis = ({ formStep, nextFormStep, typeBusiness }: Props) => {
                 </label>
                 <div>
                   <select
-                    {...register("district_code")}
+                    {...register("districtId")}
                     name="district"
                     onChange={(e: any) => {
                       setSelectedDistrict(e.target.value);
-                      setValue("district_code", e.target.value);
+                      setValue("districtId", e.target.value);
                     }}
                     value={selectedDistrict}
-                    className={`py-3 px-3 pe-9 block w-full ${errors.district_code ? "border-red-500" : "border-gray-200"} rounded-lg text-sm border focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600`}
+                    className={`py-3 px-3 pe-9 block w-full ${errors.districtId ? "border-red-500" : "border-gray-200"} rounded-lg text-sm border focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600`}
                   >
                     <option disabled={true} value={""}>
                       Pilih Kecamatan
@@ -302,7 +302,7 @@ const FormBisnis = ({ formStep, nextFormStep, typeBusiness }: Props) => {
                         );
                       })}
                   </select>
-                  {errors.district_code ? (
+                  {errors.districtId ? (
                     <div className="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
                       <svg
                         className="flex-shrink-0 size-4 text-red-500"
@@ -325,12 +325,12 @@ const FormBisnis = ({ formStep, nextFormStep, typeBusiness }: Props) => {
                     ""
                   )}
                 </div>
-                {errors.district_code ? (
+                {errors.districtId ? (
                   <p
                     className="text-sm text-red-600 mt-2"
                     id="hs-validation-name-error-helper"
                   >
-                    {errors.district_code.message?.toString()}
+                    {errors.districtId.message?.toString()}
                   </p>
                 ) : (
                   ""

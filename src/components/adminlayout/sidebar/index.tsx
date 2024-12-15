@@ -26,7 +26,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, user }: SidebarProps) => {
 
   useEffect(() => {
     if (user) {
-      setStoreName(user.store_name);
+      setStoreName(user.storeName);
     }
   }, []);
 
@@ -78,7 +78,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen, user }: SidebarProps) => {
               <p className="text-xs font-normal ">Outlet</p>
               {storeName && (
                 <h5 className="text-sm font-semibold">
-                  {user?.store_name || ""}
+                  {user?.storeName || ""}
                 </h5>
               )}
             </div>

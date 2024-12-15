@@ -22,16 +22,16 @@ export const ProductSchema = z.object({
       required_error: "Deskripsi wajib diisi",
     })
     .min(2, { message: "Deskripsi Harus lebih dari 2 karakter" }),
-  category_id: z
-    .number({
+  categoryId: z
+    .string({
       required_error: "Category Wajib dipilih",
     })
     .nullable() // Allow null initially
     .refine((value) => value !== null, {
       message: "Category Wajib dipilih", // Ensures null is not accepted for submission
     }),
-  store_id: z
-    .number({ required_error: "store id tidak ditemukan" })
+  storeId: z
+    .string({ required_error: "store id tidak ditemukan" })
     .min(1, { message: "store id tidak ditemukan" }),
   isActive: z.boolean({
     required_error: "Status Harus dipilih",

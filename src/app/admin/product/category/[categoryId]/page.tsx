@@ -7,7 +7,7 @@ const page = async ({ params }: any) => {
   const { categoryId } = params;
 
   const getDetail = await api.category.getDetailProductCategory.query({
-    id: parseInt(categoryId),
+    id: categoryId,
   });
 
   if (!categoryId) {
@@ -17,7 +17,7 @@ const page = async ({ params }: any) => {
   if (!getDetail) {
     return notFound();
   }
-  return <Editcategories id={parseInt(categoryId)} detail={getDetail.result} />;
+  return <Editcategories id={categoryId} detail={getDetail.result} />;
 };
 
 export default page;

@@ -19,13 +19,14 @@ const AddCategory = () => {
 
   const onSubmit = async (values: any) => {
     setLoading(true);
+
     const sendData: any = {
       code: values.code,
       name: values.name,
       isActive: values.isActive,
-      store_id: user.store_id,
+      storeId: user.storeId,
       createdBy: user.id,
-      updatedBy: 0,
+      updatedBy: "",
     };
 
     postCategory(sendData, {

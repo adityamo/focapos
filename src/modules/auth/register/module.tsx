@@ -5,8 +5,6 @@ import React, {
 } from "react";
 import AuthDefault from "@/components/authlayout/AuthDefault";
 import InputText from "@/components/inputs/InputText";
-import * as Yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import {
   SubmitHandler,
   useForm,
@@ -15,6 +13,8 @@ import {
 } from "react-hook-form";
 import InputPassword from "@/components/inputs/InputPassword";
 import { UserValues } from "@/interface/user";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { UserRegisterSchema } from "@/entities";
 import Link from "next/link";
 
 interface Props {
@@ -28,26 +28,12 @@ export type RegisterFormRefType = {
   setValue: UseFormSetValue<UserValues>;
 };
 
-const schema = Yup.object().shape({
-  name: Yup.string().required("Username tidak boleh kosong"),
-  email: Yup.string()
-    .email("format email tidak cocok")
-    .required("Email tidak boleh kosong"),
-  password: Yup.string()
-    .min(3, "Password anda terlalu pendek")
-    .required("Password tidak boleh kosong"),
-  confirm_password: Yup.string()
-    .oneOf([Yup.ref("password"), ""], "Password anda tidak sesuai")
-    .min(3, "Password anda terlalu pendek")
-    .required("Password tidak boleh kosong"),
-});
-
 const RegisterModule: ForwardRefRenderFunction<RegisterFormRefType, Props> = (
   { onSubmit, errorMsg, onLoading },
   ref
 ) => {
   const { handleSubmit, control, setError, setValue } = useForm({
-    resolver: yupResolver(schema),
+    resolver: zodResolver(UserRegisterSchema),
     defaultValues: {
       name: "",
       password: "",

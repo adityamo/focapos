@@ -18,20 +18,15 @@ const RegisterPage = () => {
 
   const handleRegister: SubmitHandler<UserValues> = async (values) => {
     setLoading(true);
-    const sendData: any = {
-      name: values.name,
-      email: values.email,
-      password: values.password,
-    };
 
-    registerAccount(sendData, {
+    registerAccount(values, {
       onSuccess: () => {
         setLoading(false);
         toast.success("Akun anda teregistrasi");
         router.push("/");
       },
-      onError: () => {
-        toast.error("Akun anda sudah terdaftar");
+      onError: (err) => {
+        toast.error(err.message);
         setLoading(false);
       },
     });

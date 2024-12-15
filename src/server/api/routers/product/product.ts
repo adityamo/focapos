@@ -8,13 +8,13 @@ export const productController = createTRPCRouter({
   getCategoryDDL: protectedProcedure
     .input(
       z.object({
-        store_id: z.number(),
+        storeId: z.string(),
       })
     )
     .query(async ({ input, ctx }) => {
       const ddl = await ctx.prisma.m2001_ProductCategories.findMany({
         where: {
-          store_id: input.store_id,
+          storeId: input.storeId,
         },
       });
 
@@ -45,14 +45,13 @@ export const productController = createTRPCRouter({
         createdBy: userID,
         updatedBy: 0,
         M003_Store: {
-          // Pass the store as a nested relation
           connect: {
-            id: input.store_id, // Referencing the store by its id
+            id: input.storeId,
           },
         },
         M2001_ProductCategories: {
           connect: {
-            id: input.category_id,
+            id: input.categoryId,
           },
         },
       };
@@ -70,7 +69,7 @@ export const productController = createTRPCRouter({
 
       if (input.priceData && input.priceData.length > 0) {
         const priceData = input.priceData.map((price: any) => ({
-          product_id: createProduct.id,
+          productId: createProduct.id,
           qty1: Number(price.qty1),
           qty2: Number(price.qty2),
           unitPrice: price.unitPrice,
@@ -96,7 +95,7 @@ export const productController = createTRPCRouter({
         const createProductThumbnail =
           await ctx.prisma.m2005_ProductImage.create({
             data: {
-              product_id: createProduct.id,
+              productId: createProduct.id,
               categoryImg: "productThumbnail",
               image_url: input.productThumbnail,
             },

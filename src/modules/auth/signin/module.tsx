@@ -10,12 +10,12 @@ import {
   UseFormSetError,
   UseFormSetValue,
 } from "react-hook-form";
-import * as Yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
 import AuthDefault from "@/components/authlayout/AuthDefault";
 import InputText from "@/components/inputs/InputText";
 import InputPassword from "@/components/inputs/InputPassword";
 import Link from "next/link";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { LoginSchema } from "@/entities";
 
 interface Props {
   onSubmit: SubmitHandler<UserLogin>;
@@ -28,21 +28,12 @@ export type SignInFormRefType = {
   setValue: UseFormSetValue<UserLogin>;
 };
 
-const schema = Yup.object().shape({
-  email: Yup.string()
-    .email("Invalid Email Format")
-    .required("Email Cannot Empty"),
-  password: Yup.string()
-    .min(3, "Your Password to less")
-    .required("Password cannot empty"),
-});
-
 const SignInModule: ForwardRefRenderFunction<SignInFormRefType, Props> = (
   { onSubmit, errorMsg, onLoading },
   ref
 ) => {
   const { handleSubmit, control, setError, setValue } = useForm({
-    resolver: yupResolver(schema),
+    resolver: zodResolver(LoginSchema),
     defaultValues: {
       password: "",
       email: "",

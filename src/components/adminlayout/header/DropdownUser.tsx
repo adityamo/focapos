@@ -11,6 +11,7 @@ const DropdownUser = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const { data: session }: any = useSession();
   const dispatch = useDispatch();
+  console.log(session);
 
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
@@ -32,7 +33,10 @@ const DropdownUser = () => {
             width={112}
             height={112}
             className="w-10 h-10 rounded-full"
-            src={session?.user?.picture}
+            src={
+              session?.user?.picture ||
+              "/assets/images/user/anon-pic-circle.svg"
+            }
             style={{
               width: "auto",
               height: "auto",
