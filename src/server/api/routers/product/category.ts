@@ -20,7 +20,7 @@ export const categoryController = createTRPCRouter({
 
         const data = await ctx.prisma.m2001_ProductCategories.findMany({
           where: {
-            store_id: input.store_id,
+            storeId: input.storeId,
             OR: input?.search
               ? [
                   {
@@ -42,7 +42,7 @@ export const categoryController = createTRPCRouter({
         // Count total products for the user
         const count = await ctx.prisma.m2001_ProductCategories.count({
           where: {
-            store_id: input.store_id,
+            storeId: input.storeId,
           },
         });
 
@@ -73,11 +73,12 @@ export const categoryController = createTRPCRouter({
   createProductCategory: protectedProcedure
     .input(CategorySchema)
     .mutation(async ({ ctx, input }) => {
+      console.log("masuk sini");
       const values: any = {
         code: input.code,
         name: input.name,
         isActive: input.isActive,
-        store_id: input.store_id, // Ensure this is provided
+        storeId: input.storeId, // Ensure this is provided
         createdBy: input.createdBy,
         updatedBy: input.updatedBy,
       };
@@ -101,11 +102,11 @@ export const categoryController = createTRPCRouter({
   updateProductCategory: protectedProcedure
     .input(
       z.object({
-        id: z.number(),
+        id: z.string(),
         code: z.string(),
         name: z.string(),
         isActive: z.boolean(),
-        updatedBy: z.number(),
+        updatedBy: z.string(),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -133,7 +134,7 @@ export const categoryController = createTRPCRouter({
     }),
 
   deleteProductCategory: protectedProcedure
-    .input(z.object({ id: z.number() }))
+    .input(z.object({ id: z.string() }))
     .mutation(async ({ ctx, input }) => {
       const { id } = input;
       try {
@@ -150,7 +151,7 @@ export const categoryController = createTRPCRouter({
       }
     }),
   getDetailProductCategory: protectedProcedure
-    .input(z.object({ id: z.number() }))
+    .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
       const { id } = input;
 

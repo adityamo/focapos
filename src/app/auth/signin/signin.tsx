@@ -1,5 +1,4 @@
 "use client";
-import { encryptID } from "@/helpers/EncryptHelper";
 import { UserLogin } from "@/interface/user";
 import SignInModule, { SignInFormRefType } from "@/modules/auth/signin";
 import { api } from "@/utils/api";
@@ -41,11 +40,10 @@ const SignInPage = () => {
       setErrMsg("");
       setLoading(false);
 
-      // const haveCompany = session?.user?.companyId ? true : false;
       const refetchResult = await refetch();
-      const companyStatus = refetchResult.data;
+      const companyStatus = refetchResult.data?.hasCompany;
 
-      const userID = encryptID(session?.user?.id);
+      const userID = session?.user?.id;
 
       if (companyStatus) {
         router.push("/admin/dashboard");

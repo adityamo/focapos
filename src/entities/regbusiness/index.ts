@@ -1,43 +1,43 @@
 import { z } from "zod";
 
 export const RegisterCompanySchema = z.object({
-  company_name: z
+  companyName: z
     .string({
       required_error: "Nama Perusahaan harus diisi",
       invalid_type_error: "Nama Perusahaan Tidak Valid",
     })
     .min(1, { message: "Perusahaan Wajib diisi" }),
-  company_owner: z
+  companyOwner: z
     .string({
       required_error: "Pemilik Usaha harus diisi",
       invalid_type_error: "Pemilik Usaha Tidak Valid",
     })
     .min(1, { message: "Pemilik Usah Wajib diisi" }),
-  business_typeID: z
-    .string({
+  businessTypeId: z
+    .number({
       required_error: "Tipe bisnis harus diisi",
       invalid_type_error: "Tipe bisnis Tidak Valid",
     })
     .min(1, { message: "Tipe bisnis Wajib diisi" }),
-  operational_time: z
+  operationalTime: z
     .string({
       required_error: "Waktu beroperasinal harus diisi",
       invalid_type_error: "Waktu beroperasinal Tidak Valid",
     })
     .min(1, { message: "Waktu beroperasinal Wajib diisi" }),
-  province_code: z
+  provinceId: z
     .string({
       required_error: "Provinsi harus diisi",
       invalid_type_error: "Provinsi Tidak Valid",
     })
     .min(1, { message: "Provinsi Wajib diisi" }),
-  city_code: z
+  cityId: z
     .string({
       required_error: "Kota harus diisi",
       invalid_type_error: "Kota Tidak Valid",
     })
     .min(1, { message: "Kota Wajib diisi" }),
-  district_code: z
+  districtId: z
     .string({
       required_error: "Kecamatan harus diisi",
       invalid_type_error: "Kecamatan Tidak Valid",
@@ -46,7 +46,7 @@ export const RegisterCompanySchema = z.object({
 });
 
 export const RegisterStoreSchema = z.object({
-  store_name: z
+  storeName: z
     .string({
       required_error: "Nama Toko Wajib diisi",
       invalid_type_error: "Nama Toko Wajib diisi Tidak Valid",
@@ -64,13 +64,13 @@ export const RegisterStoreSchema = z.object({
       invalid_type_error: "Nomer telepon Tidak Valid",
     })
     .min(1, { message: "Nomer telepon Wajib diisi" }),
-  bank_type: z
-    .string({
+  bankType: z
+    .number({
       required_error: "Jenis Bank harus diisi",
       invalid_type_error: "Jenis Bank Tidak Valid",
     })
     .min(1, { message: "Jenis Bank  Wajib diisi" }),
-  bank_tf: z
+  bankTf: z
     .string({
       required_error: "Nomer rekening harus diisi",
       invalid_type_error: "Nomer rekening Tidak Valid",

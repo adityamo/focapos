@@ -34,7 +34,7 @@ const CategoryTable = () => {
     search,
     page,
     perPage,
-    store_id: user?.store_id,
+    storeId: user?.storeId,
   });
 
   const data = category?.data;
@@ -62,7 +62,7 @@ const CategoryTable = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         deleteCategories(
-          { id: parseInt(categoriesID) },
+          { id: categoriesID },
           {
             onSuccess: (resp: any) => {
               toast.success("Kategori Berhasil dihapus");

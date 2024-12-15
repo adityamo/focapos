@@ -2,6 +2,7 @@
 import { createTRPCRouter } from "@/server/api/trpc";
 import { publicProcedure } from "@/server/api/trpc";
 import { prisma } from "@/server/db";
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
 
 export const registerBusiness = createTRPCRouter({
@@ -29,7 +30,7 @@ export const registerBusiness = createTRPCRouter({
       }
 
       // Cek apakah user memiliki company
-      const hasCompany = user.company_id ? true : false;
+      const hasCompany = user.companyId ? true : false;
 
       return {
         hasCompany,
@@ -39,7 +40,15 @@ export const registerBusiness = createTRPCRouter({
     .input((input) => input)
     .mutation(async ({ input }: any) => {
       const { company, store } = input;
-      const ownerID: number = company.owner_id;
+      const ownerID: string = company.ownerId;
+
+      console.log(ownerID);
+      if (!ownerID) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: `User tidak boleh kosong`,
+        });
+      }
 
       const existingUser = await prisma.user.findUnique({
         where: {
@@ -48,33 +57,39 @@ export const registerBusiness = createTRPCRouter({
       });
 
       if (!existingUser) {
-        throw new Error("User Not Found");
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: `User tidak ditemukan`,
+        });
       }
 
       const companySend = await prisma.m001_Company.create({ data: company });
 
       if (!companySend) {
-        throw new Error("Failed to create company");
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: `Gagal membuat perusahaan`,
+        });
       }
 
       const storeSend = await prisma.m003_Store.create({
         data: {
           ...store,
-          company_id: companySend.id,
+          companyId: companySend.id,
         },
       });
 
       if (storeSend) {
         const updateUser = await prisma.user.update({
           where: { id: ownerID },
-          data: { company_id: companySend.id, store_id: storeSend.id },
+          data: { companyId: companySend.id, storeId: storeSend.id },
         });
 
         if (!updateUser) {
-          return {
-            code: 500,
-            message: "Failed to submit",
-          };
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: `Gagal mengupdate user`,
+          });
         }
 
         return {
@@ -83,9 +98,9 @@ export const registerBusiness = createTRPCRouter({
         };
       }
 
-      return {
-        code: 500,
-        message: "Failed to submit",
-      };
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: `Gagal Submit`,
+      });
     }),
 });

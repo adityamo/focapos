@@ -1,7 +1,5 @@
 "use client";
 import FormSteps from "@/components/formsteps";
-import { decryptID } from "@/helpers/EncryptHelper";
-// import { getDateTimeNow } from "@/helpers/FormatHelper";
 import FormBisnis from "@/modules/regbusiness/FormBisnis";
 import FormStore from "@/modules/regbusiness/FormStore";
 import SuccessState from "@/modules/regbusiness/SuccessState";
@@ -16,7 +14,7 @@ interface Props {
 }
 
 const RegisterBusiness = ({ ddlData, steps, idCustomer }: Props) => {
-  const findID = decryptID(idCustomer);
+  const findID = idCustomer;
   const [formStep, setFormStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const { mutate: registerBusiness } =
@@ -35,23 +33,23 @@ const RegisterBusiness = ({ ddlData, steps, idCustomer }: Props) => {
     setLoading(true);
     const sendData: any = {
       company: {
-        company_name: data.company_name,
-        company_owner: data.company_owner,
-        business_typeID: Number(data.business_typeID),
-        owner_id: findID,
-        operational_time: data.operational_time,
-        province_code: data.province_code,
-        city_code: data.city_code,
-        district_code: data.district_code,
+        companyName: data.companyName,
+        companyOwner: data.companyOwner,
+        businessTypeId: Number(data.businessTypeId),
+        ownerId: findID,
+        operationalTime: data.operationalTime,
+        provinceId: data.provinceId,
+        cityId: data.cityId,
+        districtId: data.districtId,
         isActive: true,
         // updateAt: getDateTimeNow(),
       },
       store: {
-        store_name: data.store_name,
+        storeName: data.storeName,
         address: data.address,
         phone: data.phone,
-        bank_type: Number(data.bank_type),
-        bank_tf: data.bank_tf,
+        bankType: Number(data.bankType),
+        bankTf: data.bankTf,
         isActive: true,
         // updateAt: getDateTimeNow(),
       },
@@ -63,8 +61,8 @@ const RegisterBusiness = ({ ddlData, steps, idCustomer }: Props) => {
         toast.success("Bisnis anda teregistrasi");
         nextFormStep();
       },
-      onError: () => {
-        toast.error("Bisnis anda gagal teregistrasi");
+      onError: (err) => {
+        toast.error(err.message);
         setLoading(false);
       },
     });

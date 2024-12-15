@@ -1,6 +1,6 @@
 export type TokoValues = {
   ownername: string;
-  businessname: string;
+  businessName: string;
   businesstype: string;
   longtimeoperation: string;
   provinsi: string;

@@ -6,7 +6,6 @@ import Breadcrumb from "./breadcrumb";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { api } from "@/utils/api";
-import { decryptID } from "@/helpers/EncryptHelper";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/store/store";
 import { setUser } from "@/store/reducers/UserDataSlice";
@@ -22,8 +21,10 @@ const AdminPageLayout = ({ children }: Props) => {
   const router = useRouter();
   const dispatch = useDispatch();
 
+  console.log(user);
+
   const { refetch } = api.auth.getUserInfo.useQuery(
-    { id: decryptID(session?.user?.id) },
+    { id: session?.user?.id },
     { enabled: false }
   );
 
