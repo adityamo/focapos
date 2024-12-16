@@ -1,8 +1,7 @@
-// import { ProductSchema } from "@/entities/product/product";
+import { TRPCError } from "@trpc/server";
 import { createTRPCRouter } from "../../trpc";
 import { protectedProcedure } from "../../trpc";
 import { z } from "zod";
-import { decryptID } from "@/helpers/EncryptHelper";
 
 export const productController = createTRPCRouter({
   getCategoryDDL: protectedProcedure
@@ -15,6 +14,7 @@ export const productController = createTRPCRouter({
       const ddl = await ctx.prisma.m2001_ProductCategories.findMany({
         where: {
           storeId: input.storeId,
+          isActive: true,
         },
       });
 
@@ -35,36 +35,46 @@ export const productController = createTRPCRouter({
     .input((input) => input)
     .mutation(async ({ ctx, input }: any) => {
       const user: any = ctx?.session?.user;
-      const userID = decryptID(user.id);
+      const userID = user.id;
 
-      const productData: any = {
+      const productData = {
+        storeId: input.storeId,
+        categoryId: input.categoryId,
         productCode: input.productCode,
         productName: input.productName,
         description: input.description,
         isActive: input.isActive,
         createdBy: userID,
-        updatedBy: 0,
-        M003_Store: {
-          connect: {
-            id: input.storeId,
-          },
-        },
-        M2001_ProductCategories: {
-          connect: {
-            id: input.categoryId,
-          },
-        },
       };
+
+      // const productData: any = {
+      //   productCode: input.productCode,
+      //   productName: input.productName,
+      //   description: input.description,
+      //   isActive: input.isActive,
+      //   createdBy: userID,
+      //   updatedBy: 0,
+      //   M003_Store: {
+      //     connect: {
+      //       id: input.storeId,
+      //     },
+      //   },
+      //   M2001_ProductCategories: {
+      //     connect: {
+      //       id: input.categoryId,
+      //     },
+      //   },
+      // };
 
       const createProduct = await ctx.prisma.m2002_Product.create({
         data: productData,
       });
 
       if (!createProduct) {
-        return {
-          code: 500,
-          message: "Failed to submit",
-        };
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: `Gagal membuat produk`,
+        });
       }
 
       if (input.priceData && input.priceData.length > 0) {
@@ -76,7 +86,7 @@ export const productController = createTRPCRouter({
           notes: null,
           isActive: true,
           createdBy: userID,
-          updatedBy: 0,
+          updatedBy: "",
         }));
 
         const createPriceData = await ctx.prisma.m2003_ProductPrice.createMany({
@@ -84,10 +94,10 @@ export const productController = createTRPCRouter({
         });
 
         if (!createPriceData) {
-          return {
-            code: 500,
-            message: "Failed to submit price data",
-          };
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: `Gagal memasukan harga`,
+          });
         }
       }
 
@@ -102,10 +112,10 @@ export const productController = createTRPCRouter({
           });
 
         if (!createProductThumbnail) {
-          return {
-            code: 500,
-            message: "Failed to submit product thumbnail",
-          };
+          throw new TRPCError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: `Gagal Upload photo`,
+          });
         }
       }
 
