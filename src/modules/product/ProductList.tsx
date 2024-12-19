@@ -1,4 +1,5 @@
 "use client";
+import ProductTable from "@/components/table/ProductTable";
 import Link from "next/link";
 import React from "react";
 import { FiPlus } from "react-icons/fi";
@@ -21,6 +22,9 @@ const ProductList = () => {
             Tambah
           </Link>
         </div>
+      </div>
+      <div className="flex w-full">
+        <ProductTable />
       </div>
     </div>
   );

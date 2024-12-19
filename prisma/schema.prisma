@@ -175,7 +175,7 @@ model M2003_ProductPrice{
   productId             String   
   qty1                  Int
   qty2                  Int
-  unitPrice             Decimal
+  unitPrice             Decimal     @db.Money
   notes                 String?
   isActive              Boolean?
   createdAt             DateTime  @default(now())

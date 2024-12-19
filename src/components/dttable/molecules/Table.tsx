@@ -9,7 +9,7 @@ export const Table: FC<TTable> = (props): ReactElement => {
       <div className="flex md:flex-row flex-col md:gap-x-3 md:items-center sticky z-10 w-full">
         <SearchBox {...props} />
       </div>
-      <div className="overflow-x-auto min-w-max w-full h-fit flex p-1 bg-gray-50 rounded-lg relative">
+      <div className="overflow-x-auto min-w-max w-full h-fit flex p-1 bg-gray-50 rounded-lg ">
         <table className="p-2 w-full">{props.children}</table>
       </div>
       {props.meta && props?.data?.length > 0 && <Pagination {...props} />}
