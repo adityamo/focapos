@@ -9,11 +9,13 @@ import { api } from "@/utils/api";
 import { toast } from "react-toastify";
 import { nanoid } from "@reduxjs/toolkit";
 import supabase from "@/utils/spbaseclient";
+import { useRouter } from "next/navigation";
 
 const AddProduct = () => {
   const ref = useRef<FormProductRefType>(null);
   const [loading, setLoading] = useState(false);
   const { mutate: postProduct } = api.product.store.useMutation();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<ProductValues> = async (values: any) => {
     setLoading(true);
@@ -49,11 +51,11 @@ const AddProduct = () => {
         onSuccess: (resp: any) => {
           setLoading(false);
           toast.success("Product Berhasil Dibuat");
-          console.log(resp);
+          router.push("/admin/product/product");
         },
-        onError: () => {
+        onError: (err) => {
           setLoading(false);
-          toast.error("Gagal membuat product");
+          toast.error(err.message);
         },
       });
     } catch (error: any) {
